@@ -12,4 +12,11 @@ class FilmeRepository(
     fun buscaTodos(): Flow<List<Filme>> {
         return dao.buscaTodos()
     }
+
+    suspend fun atualizaTodas(){
+        webClient.buscaTodos()?.let { filmes ->
+            dao.salva(filmes)
+        }
+    }
+
 }

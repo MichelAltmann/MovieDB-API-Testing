@@ -16,7 +16,7 @@ import com.android.desafiokotlin.model.Filme
 
 class ListaFilmesAdapter(
     private val context: Context,
-    var noClique: (filme: Filme) -> Unit = {},
+//    var noClique: (filme: Filme) -> Unit = {},
     filmes: List<Filme> = emptyList()
 ) : RecyclerView.Adapter<ListaFilmesAdapter.ViewHolder>() {
 
@@ -52,10 +52,16 @@ class ListaFilmesAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val filme = filmes[position]
         holder.vincula(filme)
-        Log.i("Bind","bind ta indo sem nada")
+        Log.e("Bind","bind ta indo sem nada")
     }
 
     override fun getItemCount(): Int {
         return filmes.size
+    }
+
+    fun atualiza(filmes: List<Filme>){
+        this.filmes.clear()
+        this.filmes.addAll(filmes)
+        notifyDataSetChanged()
     }
 }

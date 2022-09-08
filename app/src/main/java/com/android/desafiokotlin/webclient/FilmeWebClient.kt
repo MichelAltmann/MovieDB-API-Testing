@@ -17,7 +17,7 @@ class FilmeWebClient {
                 filmeResposta.filme
                 }
         } catch (e: Exception) {
-            Log.e(TAG, "BuscaTodas: ",e)
+            Log.e(TAG, "BuscaTodos: ",e)
             null
         }
     }

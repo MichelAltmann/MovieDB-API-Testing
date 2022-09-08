@@ -1,6 +1,7 @@
 package com.android.desafiokotlin.ui.activity
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -29,10 +30,13 @@ class TopFilmesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_top_filmes)
         adapter
+        Log.e("Activity","Foi executado")
         configuraRecyclerView()
+//        adapter.atualiza()
+        Log.e("Activity","Foi e voltou do configura Recycler view")
         lifecycleScope.launch {
             launch {
-                buscaFilmes()
+                sincroniza()
             }
             repeatOnLifecycle(Lifecycle.State.STARTED){
                 buscaFilmes()
@@ -40,9 +44,13 @@ class TopFilmesActivity : AppCompatActivity() {
         }
     }
 
+    private suspend fun sincroniza() {
+        repository.atualizaTodas()
+    }
+
     private fun buscaFilmes() {
         repository.buscaTodos()
-
+        Log.e("Activity","Entrou no busca Filmes")
     }
 
 

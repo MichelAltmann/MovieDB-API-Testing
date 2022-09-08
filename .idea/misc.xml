@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Documentos(D)/Michel/Android Studio/DesafioKotlin/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2255" />
+        <entry key="..\:/Documentos(D)/Michel/Android Studio/DesafioKotlin/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2255" />
         <entry key="..\:/Documentos(D)/Michel/Android Studio/DesafioKotlin/app/src/main/res/layout/activity_top_filmes.xml" value="0.3625" />
         <entry key="..\:/Documentos(D)/Michel/Android Studio/DesafioKotlin/app/src/main/res/layout/item_filme.xml" value="0.3625" />
       </map>
