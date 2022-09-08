@@ -4,15 +4,13 @@ import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.android.desafiokotlin.R
-import com.android.desafiokotlin.extensions.tentaCarregarImagem
 import com.android.desafiokotlin.model.Filme
+import com.bumptech.glide.Glide
 
 class ListaFilmesAdapter(
     private val context: Context,
@@ -31,15 +29,12 @@ class ListaFilmesAdapter(
             val descricao = itemView.findViewById<TextView>(R.id.item_filme_descricao)
             val imagem = itemView.findViewById<ImageView>(R.id.item_filme_imagem)
 
-            imagem.visibility = if (filme.imagem.isNullOrBlank()){
-                GONE
-            } else {
-                imagem.tentaCarregarImagem(filme.imagem)
-                VISIBLE
-            }
+           Glide.with(imagem)
+               .load("https://image.tmdb.org/t/p/w500${filme.backdrop_path}")
+               .into(imagem)
 
-            nome.text = filme.nome
-            descricao.text = filme.descricao
+            nome.text = filme.title
+            descricao.text = filme.release_date
         }
     }
 

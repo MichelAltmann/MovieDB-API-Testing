@@ -15,7 +15,7 @@ class FilmeRepository(
 
     suspend fun atualizaTodas(){
         webClient.buscaTodos()?.let { filmes ->
-            dao.salva(filmes)
+//            dao.salva(filmes) to do
         }
     }
 

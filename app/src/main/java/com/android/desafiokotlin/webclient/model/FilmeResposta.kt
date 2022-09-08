@@ -1,18 +1,18 @@
 package com.android.desafiokotlin.webclient.model
 
 import com.android.desafiokotlin.model.Filme
-import java.util.*
 
 class FilmeResposta(
-    val id: String?,
-    val nome: String?,
-    val descricao: String?,
-    val imagem: String?
+//    @SerializedName("page") val pag: Int? para trocar o nome da variável
+    val page: Int?,
+    val results: List<Filme>?,
+    val total_pages: Int?,
+    val total_results: Int?
 ) {
-    val filme: Filme get() = Filme(
-        id = id ?: UUID.randomUUID().toString(),
-        nome = nome ?: "",
-        descricao = descricao ?: "",
-        imagem = imagem ?: ""
+    val resposta: FilmeResposta get() = FilmeResposta(
+        page ?: 0,
+        results ?: listOf(),
+        total_pages ?: 0,
+        total_results ?: 0
     )
 }
