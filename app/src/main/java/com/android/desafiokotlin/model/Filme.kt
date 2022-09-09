@@ -8,6 +8,7 @@ import java.io.Serializable
 class Filme(
     @PrimaryKey
     val id: Int?,
+    val original_language: String?,
     val title: String?,
     val release_date: String?,
     val backdrop_path: String?,
@@ -20,6 +21,7 @@ class Filme(
     val filme: Filme
         get() = Filme(
             id ?: 0,
+            original_language ?: "",
             title ?: "",
             release_date ?: "",
             backdrop_path ?: "",

@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.TopFilmesActivity">
+    tools:context=".ui.activity.TopFilmesActivity"
+    android:background="#191919">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:background="#191919"
         android:id="@+id/activity_top_filmes_recyclerview"
         android:layout_width="0dp"
         android:layout_height="0dp"
