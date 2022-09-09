@@ -29,7 +29,7 @@ class TopFilmesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_top_filmes)
         lifecycleScope.launchWhenStarted {
-            lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.CREATED) {
                 try {
                     val response = dataSource.buscaTodos()
                     if (response != null) {
@@ -43,6 +43,7 @@ class TopFilmesActivity : AppCompatActivity() {
             }
         }
     }
+
 
     private fun configuraRecyclerView() {
         val recyclerView = findViewById<RecyclerView>(R.id.activity_top_filmes_recyclerview)
