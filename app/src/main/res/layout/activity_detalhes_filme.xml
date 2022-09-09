@@ -4,6 +4,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="8dp"
     tools:context=".ui.activity.DetalhesFilmeActivity">
+
+
+
+    <ImageView
+        android:id="@+id/activity_detalhes_imagem_do_filme"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:scaleType="centerCrop"
+        tools:srcCompat="@tools:sample/backgrounds/scenic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/activity_detalhes_nome_do_filme"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:text="Nome do filme"
+        android:textSize="32sp"
+        android:gravity="center"
+        android:textColor="#FFAC1616"
+        android:layout_margin="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/activity_detalhes_imagem_do_filme"
+        />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

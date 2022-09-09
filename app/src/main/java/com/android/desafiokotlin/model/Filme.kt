@@ -2,6 +2,7 @@ package com.android.desafiokotlin.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 @Entity
 class Filme(
@@ -15,7 +16,7 @@ class Filme(
     val original_title: String?,
     val vote_average: Number?,
     val vote_count: Int?
-){
+) : Serializable {
     val filme: Filme
         get() = Filme(
             id ?: 0,

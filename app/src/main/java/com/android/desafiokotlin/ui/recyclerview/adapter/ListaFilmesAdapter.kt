@@ -45,7 +45,7 @@ class ListaFilmesAdapter(
 
         fun vincula(filme: Filme) {
             val nome = itemView.findViewById<TextView>(R.id.item_filme_nome)
-            val descricao = itemView.findViewById<TextView>(R.id.item_filme_descricao)
+            val descricao = itemView.findViewById<TextView>(R.id.item_filme_data)
             val imagem = itemView.findViewById<ImageView>(R.id.item_filme_imagem)
 
            Glide.with(imagem)

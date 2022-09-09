@@ -1,5 +1,7 @@
 package com.android.desafiokotlin.ui.activity
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -12,11 +14,12 @@ import com.android.desafiokotlin.R
 import com.android.desafiokotlin.model.Filme
 import com.android.desafiokotlin.ui.recyclerview.adapter.ListaFilmesAdapter
 import com.android.desafiokotlin.webclient.FilmeWebClient
+import java.io.Serializable
 
-class TopFilmesActivity : AppCompatActivity(){
+class TopFilmesActivity : AppCompatActivity() {
 
     private val arrayList: ArrayList<Filme> = arrayListOf()
-
+    private val context: Context = this@TopFilmesActivity
     private val dataSource by lazy {
         FilmeWebClient()
     }
@@ -27,14 +30,14 @@ class TopFilmesActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_top_filmes)
         lifecycleScope.launchWhenStarted {
-            lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED){
+            lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 try {
                     val response = dataSource.buscaTodos()
-                    if (response != null){
+                    if (response != null) {
                         arrayList.addAll(response.results!!)
                     }
 
-                } catch (e: Exception){
+                } catch (e: Exception) {
                     Log.e("onCreate: ", "Api error $e")
                 }
                 configuraRecyclerView()
@@ -48,10 +51,19 @@ class TopFilmesActivity : AppCompatActivity(){
         adapter.atualiza(arrayList)
         adapter.setOnItemClickListener(object : ListaFilmesAdapter.OnItemClickListener {
             override fun onItemClick(position: Int) {
-                Toast.makeText(this@TopFilmesActivity, "You clicked on $position ${arrayList[position].title}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    "You clicked on $position ${arrayList[position].title}",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                var filme: Filme = arrayList[position]
+
+
+                val intent = Intent(context, DetalhesFilmeActivity::class.java)
+                intent.putExtra("filme", filme as Serializable)
+                startActivity(intent)
             }
         })
-
-
-        }
     }
+}
