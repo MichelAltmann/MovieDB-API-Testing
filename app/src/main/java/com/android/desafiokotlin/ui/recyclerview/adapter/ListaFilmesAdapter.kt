@@ -1,7 +1,6 @@
 package com.android.desafiokotlin.ui.recyclerview.adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -66,7 +65,7 @@ class ListaFilmesAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val filme = filmes[position]
         holder.vincula(filme)
-        Log.e("Bind","bind ta indo sem nada")
+
     }
 
     override fun getItemCount(): Int {

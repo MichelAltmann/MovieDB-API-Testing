@@ -4,152 +4,230 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="8dp"
-    tools:context=".ui.activity.DetalhesFilmeActivity">
+    tools:context=".ui.activity.DetalhesFilmeActivity"
+    android:paddingBottom="8dp"
+    android:background="#191919">
 
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintBottom_toBottomOf="parent">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/activity_detalhes_imagem_do_filme"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:scaleType="centerCrop"
-            tools:srcCompat="@tools:sample/backgrounds/scenic"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:flow_verticalBias="0.0"/>
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/activity_detalhes_nome_do_filme"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            tools:text="Nome do filme"
-            android:textSize="32sp"
-            android:gravity="center"
-            android:textColor="#FFAC1616"
-            android:layout_margin="12dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/activity_detalhes_imagem_do_filme"/>
+            <ImageView
+                android:id="@+id/activity_detalhes_imagem_do_filme"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:scaleType="centerCrop"
+                android:layout_margin="8dp"
+                app:flow_verticalBias="0.0"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
-        <TextView
-            android:id="@+id/activity_detalhes_sinopse"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Sinopse:"
-            tools:text="Sinopse"
-            android:textSize="16sp"
-            android:layout_margin="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/activity_detalhes_nome_do_filme"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0.0"/>
+            <TextView
+                android:id="@+id/activity_detalhes_nome_do_filme"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:gravity="center"
+                android:textColor="#FF0000"
+                android:textSize="32sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/activity_detalhes_imagem_do_filme"
+                tools:text="Nome do filme" />
 
-        <TextView
-            android:id="@+id/activity_detalhes_data_lancamento"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Data de Lançamento:"
-            tools:text="Data de lancamento"
-            android:textSize="16sp"
-            android:layout_margin="8dp"
-            app:layout_constraintTop_toBottomOf="@id/activity_detalhes_sinopse"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0.0"/>
+            <TextView
+                android:id="@+id/activity_detalhes_sinopse"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:textSize="20sp"
+                android:textColor="#a00000"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/activity_detalhes_nome_do_filme"
+                app:layout_constraintVertical_bias="0.0"
+                tools:text="Sinopse" />
 
-        <TextView
-            android:id="@+id/activity_detalhes_titulo_original"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Titulo Original:"
-            tools:text="Titulo Original"
-            android:textSize="16sp"
-            android:layout_margin="8dp"
-            app:layout_constraintTop_toBottomOf="@id/activity_detalhes_data_lancamento"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0.0"/>
+            <TextView
+                android:id="@+id/activity_detalhes_data_lancamento_texto"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="32dp"
+                android:text="Data de Lançamento:"
+                android:textSize="20sp"
+                android:textColor="#a00000"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/activity_detalhes_sinopse"
+                app:layout_constraintVertical_bias="0.0" />
 
-        <TextView
-            android:id="@+id/activity_detalhes_lingua_original"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Lingua Original:"
-            tools:text="Lingua Original"
-            android:textSize="16sp"
-            android:layout_margin="8dp"
-            app:layout_constraintTop_toBottomOf="@id/activity_detalhes_titulo_original"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0.0"/>
+            <TextView
+                android:id="@+id/activity_detalhes_data_lancamento"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="32dp"
+                android:text="Data de Lançamento:"
+                android:textSize="20sp"
+                android:textColor="#a00000"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/activity_detalhes_sinopse"
+                app:layout_constraintVertical_bias="0.0"
+                tools:text="Data de lancamento" />
 
-        <TextView
-            android:id="@+id/activity_detalhes_popularidade"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Popularidade:"
-            tools:text="Popularidade"
-            android:textSize="16sp"
-            android:layout_margin="8dp"
-            app:layout_constraintTop_toBottomOf="@id/activity_detalhes_lingua_original"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0.0"/>
+            <TextView
+                android:id="@+id/activity_detalhes_titulo_original_texto"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="32dp"
+                android:text="Titulo Original:"
+                android:textSize="20sp"
+                android:textColor="#a00000"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/activity_detalhes_data_lancamento_texto"
+                app:layout_constraintVertical_bias="0.0"
+                tools:text="Titulo Original" />
 
-        <TextView
-            android:id="@+id/activity_detalhes_media_de_votos"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Média da Votação:"
-            tools:text="Média da Votação"
-            android:textSize="16sp"
-            android:layout_margin="8dp"
-            app:layout_constraintTop_toBottomOf="@id/activity_detalhes_popularidade"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0.0"/>
+            <TextView
+                android:id="@+id/activity_detalhes_titulo_original"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="8dp"
+                android:gravity="end"
+                android:textSize="20sp"
+                android:textColor="#a00000"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/activity_detalhes_titulo_original_texto"
+                app:layout_constraintTop_toBottomOf="@id/activity_detalhes_data_lancamento_texto"
+                tools:text="Titulo Original" />
 
-        <TextView
-            android:id="@+id/activity_detalhes_quantidade_de_votos"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Quantidade de Votos:"
-            tools:text="Quantidade de Votos"
-            android:textSize="16sp"
-            android:layout_margin="8dp"
-            app:layout_constraintTop_toBottomOf="@id/activity_detalhes_media_de_votos"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0.0"/>
+            <TextView
+                android:id="@+id/activity_detalhes_lingua_original_texto"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="32dp"
+                android:text="Lingua Original:"
+                android:textSize="20sp"
+                android:textColor="#a00000"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/activity_detalhes_titulo_original_texto"
+                app:layout_constraintVertical_bias="0.0"
+                tools:text="Lingua Original" />
+
+            <TextView
+                android:id="@+id/activity_detalhes_lingua_original"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="32dp"
+                android:textSize="20sp"
+                android:textColor="#a00000"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/activity_detalhes_titulo_original_texto"
+                app:layout_constraintVertical_bias="0.0"
+                tools:text="Lingua Original" />
+
+            <TextView
+                android:id="@+id/activity_detalhes_popularidade_texto"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="32dp"
+                android:text="Popularidade:"
+                android:textSize="20sp"
+                android:textColor="#a00000"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/activity_detalhes_lingua_original_texto"
+                app:layout_constraintVertical_bias="0.0"
+                tools:text="Popularidade" />
+
+            <TextView
+                android:id="@+id/activity_detalhes_popularidade"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="32dp"
+                android:textSize="20sp"
+                android:textColor="#a00000"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/activity_detalhes_lingua_original_texto"
+                app:layout_constraintVertical_bias="0.0"
+                tools:text="Popularidade" />
+
+            <TextView
+                android:id="@+id/activity_detalhes_media_de_votos_texto"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="32dp"
+                android:text="Média da Votação:"
+                android:textSize="20sp"
+                android:textColor="#a00000"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/activity_detalhes_popularidade_texto"
+                app:layout_constraintVertical_bias="0.0"
+                tools:text="Média da Votação" />
+
+            <TextView
+                android:id="@+id/activity_detalhes_media_de_votos"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="32dp"
+                android:text="Média da Votação:"
+                android:textSize="20sp"
+                android:textColor="#a00000"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/activity_detalhes_popularidade_texto"
+                app:layout_constraintVertical_bias="0.0"
+                tools:text="Média da Votação" />
+
+            <TextView
+                android:id="@+id/activity_detalhes_quantidade_de_votos_texto"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="32dp"
+                android:text="Quantidade de Votos:"
+                android:textSize="20sp"
+                android:textColor="#a00000"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/activity_detalhes_media_de_votos_texto"
+                app:layout_constraintVertical_bias="0.0"
+                tools:text="Quantidade de Votos" />
+
+            <TextView
+                android:id="@+id/activity_detalhes_quantidade_de_votos"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="32dp"
+                android:textSize="20sp"
+                android:textColor="#a00000"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/activity_detalhes_media_de_votos_texto"
+                app:layout_constraintVertical_bias="0.0"
+                tools:text="Quantidade de Votos" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
-</ScrollView>
-
-
-
+    </ScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

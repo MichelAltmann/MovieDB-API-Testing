@@ -1,6 +1,7 @@
 package com.android.desafiokotlin.ui.activity
 
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -31,13 +32,53 @@ class DetalhesFilmeActivity : AppCompatActivity() {
                     .load("https://image.tmdb.org/t/p/w500${filme.backdrop_path}")
                     .into(imagem)
                 nome.text = filme.title
-                linguaOriginal.text = filme.original_language
-                tituloOriginal.text = filme.original_title
-                sinopse.text = filme.overview
-                dataDeLancamento.text = filme.release_date
-                popularidade.text = filme.popularity.toString()
-                mediaVotos.text = filme.vote_average.toString()
-                votos.text = filme.vote_count.toString()
+
+                if (filme.overview != ""){
+                    sinopse.text = filme.overview
+                } else {
+                    sinopse.visibility = View.GONE
+                }
+
+                if(filme.release_date != ""){
+                    dataDeLancamento.text = filme.release_date
+                } else {
+                    dataDeLancamento.visibility = View.GONE
+                    findViewById<TextView>(R.id.activity_detalhes_data_lancamento_texto).visibility = View.GONE
+                }
+
+                if (filme.original_language != ""){
+                    linguaOriginal.text = filme.original_language
+                } else {
+                    linguaOriginal.visibility = View.GONE
+                    findViewById<TextView>(R.id.activity_detalhes_lingua_original_texto).visibility = View.GONE
+                }
+
+                if (filme.original_title != ""){
+                    tituloOriginal.text = filme.original_title
+                } else {
+                    tituloOriginal.visibility = View.GONE
+                    findViewById<TextView>(R.id.activity_detalhes_titulo_original_texto).visibility = View.GONE
+                }
+
+                if (filme.popularity != 0){
+                    popularidade.text = filme.popularity.toString()
+                } else {
+                    popularidade.visibility = View.GONE
+                    findViewById<TextView>(R.id.activity_detalhes_popularidade_texto).visibility = View.GONE
+                }
+                if (filme.vote_average != 0){
+                    mediaVotos.text = filme.vote_average.toString()
+                } else {
+                    mediaVotos.visibility = View.GONE
+                    findViewById<TextView>(R.id.activity_detalhes_media_de_votos_texto).visibility = View.GONE
+                }
+                if (filme.vote_count != 0){
+                    votos.text = filme.vote_count.toString()
+                } else {
+                    votos.visibility = View.GONE
+                    findViewById<TextView>(R.id.activity_detalhes_quantidade_de_votos_texto).visibility = View.GONE
+                }
+
             }
     }
 }
