@@ -2,6 +2,7 @@ package com.android.desafiokotlin.ui.activity
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -12,17 +13,15 @@ import com.android.desafiokotlin.model.Filme
 import com.android.desafiokotlin.ui.recyclerview.adapter.ListaFilmesAdapter
 import com.android.desafiokotlin.webclient.FilmeWebClient
 
-class TopFilmesActivity : AppCompatActivity() {
+class TopFilmesActivity : AppCompatActivity(){
 
     private val arrayList: ArrayList<Filme> = arrayListOf()
-
-    private val adapter by lazy {
-        ListaFilmesAdapter(this)
-    }
 
     private val dataSource by lazy {
         FilmeWebClient()
     }
+
+    private val adapter = ListaFilmesAdapter(this, arrayList)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,22 +42,16 @@ class TopFilmesActivity : AppCompatActivity() {
         }
     }
 
-//    private suspend fun sincroniza() {
-//        repository.atualizaTodas()
-//    }
-//
-//    private fun buscaFilmes() {
-//        repository.buscaTodos()
-//        Log.e("Activity","Entrou no busca Filmes")
-//    }
-
-
     private fun configuraRecyclerView() {
         val recyclerView = findViewById<RecyclerView>(R.id.activity_top_filmes_recyclerview)
         recyclerView.adapter = adapter
         adapter.atualiza(arrayList)
-//        adapter.noClique = { filme ->
-//
-//        }
+        adapter.setOnItemClickListener(object : ListaFilmesAdapter.OnItemClickListener {
+            override fun onItemClick(position: Int) {
+                Toast.makeText(this@TopFilmesActivity, "You clicked on $position ${arrayList[position].title}", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+
+        }
     }
-}

@@ -14,17 +14,36 @@ import com.bumptech.glide.Glide
 
 class ListaFilmesAdapter(
     private val context: Context,
-//    var noClique: (filme: Filme) -> Unit = {},
     filmes: List<Filme> = emptyList()
 ) : RecyclerView.Adapter<ListaFilmesAdapter.ViewHolder>() {
 
+    private lateinit var mListener : OnItemClickListener
     private val filmes = filmes.toMutableList()
 
-    class ViewHolder(private var view: View,) : RecyclerView.ViewHolder(view) {
+    interface OnItemClickListener{
+        fun onItemClick(position: Int)
+    }
+
+    fun setOnItemClickListener(listener: OnItemClickListener){
+
+        mListener = listener
+
+    }
+
+    inner class ViewHolder(private val view: View, listener: OnItemClickListener): RecyclerView.ViewHolder(view){
+
+        init {
+
+            itemView.setOnClickListener {
+
+                listener.onItemClick(adapterPosition)
+
+            }
+
+        }
 
 
         fun vincula(filme: Filme) {
-
             val nome = itemView.findViewById<TextView>(R.id.item_filme_nome)
             val descricao = itemView.findViewById<TextView>(R.id.item_filme_descricao)
             val imagem = itemView.findViewById<ImageView>(R.id.item_filme_imagem)
@@ -41,7 +60,7 @@ class ListaFilmesAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(context)
         val view = inflater.inflate(R.layout.item_filme, parent, false)
-        return ViewHolder(view)
+        return ViewHolder(view,mListener)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -59,4 +78,5 @@ class ListaFilmesAdapter(
         this.filmes.addAll(filmes)
         notifyDataSetChanged()
     }
+
 }
