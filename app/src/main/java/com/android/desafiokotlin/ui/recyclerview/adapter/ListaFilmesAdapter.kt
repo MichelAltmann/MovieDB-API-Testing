@@ -6,7 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.BlendModeColorFilterCompat
+import androidx.core.graphics.BlendModeCompat
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.android.desafiokotlin.R
 import com.android.desafiokotlin.model.Filme
 import com.bumptech.glide.Glide
@@ -34,6 +38,7 @@ class ListaFilmesAdapter(
 
            Glide.with(imagem)
                .load("https://image.tmdb.org/t/p/w500${filme.poster_path}")
+               .placeholder(loadCircularProgress(imagem.context))
                .into(imagem)
 
             nome.text = filme.title
@@ -61,6 +66,21 @@ class ListaFilmesAdapter(
         this.filmes.clear()
         this.filmes.addAll(filmes)
         notifyDataSetChanged()
+    }
+
+    private fun loadCircularProgress(context: Context): CircularProgressDrawable {
+        val circularProgressDrawable = CircularProgressDrawable(context)
+        val colorFilter = BlendModeColorFilterCompat.createBlendModeColorFilterCompat(
+            ContextCompat.getColor(context, R.color.background),
+            BlendModeCompat.SRC_ATOP
+        )
+
+        circularProgressDrawable.colorFilter = colorFilter
+        circularProgressDrawable.strokeWidth = 10f
+        circularProgressDrawable.centerRadius = 60f
+        circularProgressDrawable.start()
+
+        return circularProgressDrawable
     }
 
 }

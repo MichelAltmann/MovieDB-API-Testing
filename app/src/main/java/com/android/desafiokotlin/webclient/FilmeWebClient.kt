@@ -10,9 +10,9 @@ class FilmeWebClient {
 
     private val filmeService: FilmeService = RetrofitInicializador().filmeService
 
-    suspend fun buscaTodos(): FilmeResposta? {
+    suspend fun buscaTodos(page: Int): FilmeResposta? {
         return try {
-            val response = filmeService.buscaTodos()
+            val response = filmeService.buscaTodos(page = page)
             if (response.isSuccessful) {
                 response.body()
             } else {
