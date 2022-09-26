@@ -22,13 +22,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:minHeight= "100dp"
-            android:background="#343434">
+            android:background="#3f3f3f">
 
             <ImageView
                 android:id="@+id/item_filme_imagem"
                 android:layout_width="0dp"
-                android:layout_height="100dp"
-                android:scaleType="centerCrop"
+                android:layout_height="250dp"
+                android:scaleType="fitXY"
                 tools:srcCompat="@tools:sample/backgrounds/scenic"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -39,11 +39,12 @@
             <TextView
                 android:id="@+id/item_filme_nome"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="42dp"
                 android:layout_margin="8dp"
+                android:gravity="center"
                 tools:text="Nome do filme"
-                android:textSize="20sp"
-                android:textColor="#cf1111"
+                android:textSize="16sp"
+                android:textColor="#aaaaaa"
                 android:textStyle="bold"
                 app:layout_constraintTop_toBottomOf="@id/item_filme_imagem"
                 app:layout_constraintStart_toStartOf="parent"
@@ -54,11 +55,12 @@
 
             <TextView
                 android:id="@+id/item_filme_data"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 tools:text="Data Lançamento"
-                android:textColor="#a00000"
+                android:gravity="center"
+                android:textColor="#aaaaaa"
                 app:layout_constraintTop_toBottomOf="@id/item_filme_nome"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>

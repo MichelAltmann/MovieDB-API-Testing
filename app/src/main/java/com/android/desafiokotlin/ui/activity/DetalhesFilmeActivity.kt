@@ -26,7 +26,9 @@ class DetalhesFilmeActivity : AppCompatActivity() {
         val votos = findViewById<TextView>(R.id.activity_detalhes_quantidade_de_votos)
 
 
-            var filme = intent.getSerializableExtra("filme") as Filme?
+        val filme = intent.getSerializableExtra("filme") as Filme?
+
+
         preechendoDadosNaTela(
             filme,
             imagem,
@@ -54,10 +56,12 @@ class DetalhesFilmeActivity : AppCompatActivity() {
         votos: TextView
     ) {
         if (filme != null) {
-            Glide.with(imagem)
-                .load("https://image.tmdb.org/t/p/w500${filme.backdrop_path}")
+            title = "Detalhes " + filme.title
+
+            Glide.with(imagem).load("https://image.tmdb.org/t/p/w500${filme.backdrop_path}")
                 .into(imagem)
             nome.text = filme.title
+
             overviewCheck(filme, sinopse)
             dataCheck(filme, dataDeLancamento)
             linguaOriginalCheck(filme, linguaOriginal)

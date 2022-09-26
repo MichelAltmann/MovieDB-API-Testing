@@ -25,7 +25,9 @@ class TopFilmesActivity : AppCompatActivity() {
 
     private val adapter = ListaFilmesAdapter(this, arrayList)
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        title = "Filmes"
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_top_filmes)
         lifecycleScope.launchWhenStarted {
@@ -49,13 +51,10 @@ class TopFilmesActivity : AppCompatActivity() {
         val recyclerView = findViewById<RecyclerView>(R.id.activity_top_filmes_recyclerview)
         recyclerView.adapter = adapter
         adapter.atualiza(arrayList)
-        adapter.setOnItemClickListener(object : ListaFilmesAdapter.OnItemClickListener {
-            override fun onItemClick(position: Int) {
-                var filme: Filme = arrayList[position]
-                val intent = Intent(context, DetalhesFilmeActivity::class.java)
-                intent.putExtra("filme", filme as Serializable)
-                startActivity(intent)
-            }
-        })
+        adapter.itemClickListener = {
+            val intent = Intent(context, DetalhesFilmeActivity::class.java)
+            intent.putExtra("filme", it)
+            startActivity(intent)
+        }
     }
 }

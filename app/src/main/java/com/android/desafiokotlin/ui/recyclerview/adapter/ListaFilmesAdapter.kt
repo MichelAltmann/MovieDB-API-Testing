@@ -16,30 +16,11 @@ class ListaFilmesAdapter(
     filmes: List<Filme> = emptyList()
 ) : RecyclerView.Adapter<ListaFilmesAdapter.ViewHolder>() {
 
-    private lateinit var mListener : OnItemClickListener
+    lateinit var itemClickListener : (filme : Filme) -> Unit
     private val filmes = filmes.toMutableList()
 
-    interface OnItemClickListener{
-        fun onItemClick(position: Int)
-    }
 
-    fun setOnItemClickListener(listener: OnItemClickListener){
-
-        mListener = listener
-
-    }
-
-    inner class ViewHolder(private val view: View, listener: OnItemClickListener): RecyclerView.ViewHolder(view){
-
-        init {
-
-            itemView.setOnClickListener {
-
-                listener.onItemClick(adapterPosition)
-
-            }
-
-        }
+    inner class ViewHolder(private val view: View): RecyclerView.ViewHolder(view){
 
 
         fun vincula(filme: Filme) {
@@ -47,8 +28,12 @@ class ListaFilmesAdapter(
             val descricao = itemView.findViewById<TextView>(R.id.item_filme_data)
             val imagem = itemView.findViewById<ImageView>(R.id.item_filme_imagem)
 
+            itemView.rootView.setOnClickListener{
+                itemClickListener.invoke(filme)
+            }
+
            Glide.with(imagem)
-               .load("https://image.tmdb.org/t/p/w500${filme.backdrop_path}")
+               .load("https://image.tmdb.org/t/p/w500${filme.poster_path}")
                .into(imagem)
 
             nome.text = filme.title
@@ -59,7 +44,7 @@ class ListaFilmesAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(context)
         val view = inflater.inflate(R.layout.item_filme, parent, false)
-        return ViewHolder(view,mListener)
+        return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
