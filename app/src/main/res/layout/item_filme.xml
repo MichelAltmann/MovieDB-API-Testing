@@ -46,7 +46,7 @@
                 android:maxLines="2"
                 android:ellipsize="end"
                 android:textSize="16sp"
-                android:textColor="#aaaaaa"
+                android:textColor="#FFFFFF"
                 android:textStyle="bold"
                 app:layout_constraintTop_toBottomOf="@id/item_filme_imagem"
                 app:layout_constraintStart_toStartOf="parent"

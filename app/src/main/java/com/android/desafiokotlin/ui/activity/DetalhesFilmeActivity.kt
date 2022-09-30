@@ -130,7 +130,17 @@ class DetalhesFilmeActivity : AppCompatActivity() {
         linguaOriginal: TextView
     ) {
         if (filme.original_language != "") {
-            linguaOriginal.text = filme.original_language
+            when {
+                filme.original_language.equals("en") -> linguaOriginal.text = "Inglês"
+                filme.original_language.equals("pt") -> linguaOriginal.text = "Português"
+                filme.original_language.equals("es") -> linguaOriginal.text = "Espanhol"
+                filme.original_language.equals("ja") -> linguaOriginal.text = "Japonês"
+                filme.original_language.equals("ko") -> linguaOriginal.text = "Koreano"
+                filme.original_language.equals("fr") -> linguaOriginal.text = "Francês"
+                else -> {
+                    linguaOriginal.text = filme.original_language
+                }
+            }
         } else {
             linguaOriginal.visibility = View.GONE
             findViewById<TextView>(R.id.activity_detalhes_lingua_original_texto).visibility =

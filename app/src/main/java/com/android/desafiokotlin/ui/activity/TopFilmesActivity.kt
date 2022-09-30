@@ -47,6 +47,11 @@ class TopFilmesActivity : AppCompatActivity() {
         addScrollListenerAdapter()
     }
 
+    override fun onPause() {
+        super.onPause()
+        removeScrollListenerAdapter()
+    }
+
     private fun addScrollListenerAdapter() {
         scrollListener = object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -73,11 +78,6 @@ class TopFilmesActivity : AppCompatActivity() {
         if (::scrollListener.isInitialized) {
             recyclerView.removeOnScrollListener(scrollListener)
         }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        removeScrollListenerAdapter()
     }
 
     private suspend fun buscaFilmesComPaginacao() {
