@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.TopFilmesActivity"
-    android:background="#191919">
+    tools:context=".ui.activity.ui.Filmes.FilmesFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:background="#191919"
@@ -19,5 +18,4 @@
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="2"
         tools:listitem="@layout/item_filme"/>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,46 +1,61 @@
-package com.android.desafiokotlin.ui.activity
+package com.android.desafiokotlin.ui.activity.ui.Filmes
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Lifecycle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.android.desafiokotlin.R
+import com.android.desafiokotlin.databinding.FragmentFilmesBinding
 import com.android.desafiokotlin.model.Filme
+import com.android.desafiokotlin.ui.activity.DetalhesFilmeActivity
 import com.android.desafiokotlin.ui.recyclerview.adapter.ListaFilmesAdapter
 import com.android.desafiokotlin.webclient.FilmeWebClient
 import kotlinx.coroutines.launch
 
-class TopFilmesActivity : AppCompatActivity() {
+class FilmesFragment : Fragment() {
 
+    private var _binding: FragmentFilmesBinding? = null
+
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
     private val arrayList: ArrayList<Filme> = arrayListOf()
-    private val context: Context = this@TopFilmesActivity
     private val dataSource by lazy {
         FilmeWebClient()
     }
     private lateinit var recyclerView: RecyclerView
     private var page = 1
-    private val adapter = ListaFilmesAdapter(this, arrayList)
+    private lateinit var adapter : ListaFilmesAdapter
     private lateinit var scrollListener: RecyclerView.OnScrollListener
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        title = "Filmes"
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_top_filmes)
-        lifecycleScope.launchWhenStarted {
-            lifecycle.repeatOnLifecycle(Lifecycle.State.CREATED) {
-                recyclerView = findViewById<RecyclerView>(R.id.activity_top_filmes_recyclerview)
-                buscaFilmesComPaginacao()
-                configuraRecyclerView()
-            }
-        }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        val homeViewModel =
+            ViewModelProvider(this).get(FilmesViewModel::class.java)
+        adapter = ListaFilmesAdapter(inflater.context, arrayList)
+        _binding = FragmentFilmesBinding.inflate(inflater, container, false)
+        val root: View = binding.root
+        return root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        super.onCreate(savedInstanceState)
+        lifecycleScope.launchWhenStarted {
+                recyclerView = binding.activityTopFilmesRecyclerview
+                buscaFilmesComPaginacao()
+                configuraRecyclerView()
+        }
+    }
     override fun onResume() {
         super.onResume()
         removeScrollListenerAdapter()
@@ -105,5 +120,10 @@ class TopFilmesActivity : AppCompatActivity() {
             intent.putExtra("filme", it)
             startActivity(intent)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
