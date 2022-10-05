@@ -1,6 +1,7 @@
 package com.android.desafiokotlin.ui.recyclerview.adapter
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,8 +22,10 @@ class ListaFilmesAdapter(
 ) : RecyclerView.Adapter<ListaFilmesAdapter.ViewHolder>() {
 
     lateinit var itemClickListener : (filme : Filme) -> Unit
+    lateinit var onLongItemClickListener : (Void) -> Unit
     private val filmes = filmes.toMutableList()
-
+    private val filmesSelecionados : ArrayList<Filme> = ArrayList()
+    private var isSelectedMode : Boolean = false
 
     inner class ViewHolder(private val view: View): RecyclerView.ViewHolder(view){
 
@@ -32,8 +35,39 @@ class ListaFilmesAdapter(
             val descricao = itemView.findViewById<TextView>(R.id.item_filme_data)
             val imagem = itemView.findViewById<ImageView>(R.id.item_filme_imagem)
 
+            itemView.rootView.setOnLongClickListener{
+                isSelectedMode = true
+
+                if (filmesSelecionados.contains(filmes.get(adapterPosition))){
+                    itemView.setBackgroundColor(Color.TRANSPARENT)
+                    filmesSelecionados.remove(filmes.get(adapterPosition))
+                } else {
+                    itemView.setBackgroundResource(R.color.selectedColor)
+                    filmesSelecionados.add(filmes.get(adapterPosition))
+                }
+
+                if (filmesSelecionados.size == 0){
+                    isSelectedMode = false
+                }
+                true
+            }
+
             itemView.rootView.setOnClickListener{
-                itemClickListener.invoke(filme)
+                if (isSelectedMode){
+                    if (filmesSelecionados.contains(filmes.get(adapterPosition))){
+                        itemView.setBackgroundColor(Color.TRANSPARENT)
+                        filmesSelecionados.remove(filmes.get(adapterPosition))
+                    } else {
+                        itemView.setBackgroundResource(R.color.selectedColor)
+                        filmesSelecionados.add(filmes.get(adapterPosition))
+                    }
+
+                    if (filmesSelecionados.size == 0){
+                        isSelectedMode = false
+                    }
+                } else{
+                    itemClickListener.invoke(filme)
+                }
             }
 
            Glide.with(imagem)
@@ -84,3 +118,5 @@ class ListaFilmesAdapter(
     }
 
 }
+
+
