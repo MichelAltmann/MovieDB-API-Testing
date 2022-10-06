@@ -21,7 +21,7 @@ class ListaFilmesAdapter(
 ) : RecyclerView.Adapter<ListaFilmesAdapter.ViewHolder>() {
 
     lateinit var itemClickListener : (filme : Filme) -> Unit
-    lateinit var onLongItemClickListener : (Boolean, filmesSelecionados : ArrayList<Filme>) -> Unit
+    lateinit var onLongItemClickListener : (Boolean) -> Unit
     private val filmes = filmes.toMutableList()
     private var isSelectedMode : Boolean = false
     private val filmesSelecionados : ArrayList<Filme> = ArrayList()
@@ -34,7 +34,7 @@ class ListaFilmesAdapter(
             val imagem = itemView.findViewById<ImageView>(R.id.item_filme_imagem)
             itemView.rootView.setOnLongClickListener{
                 isSelectedMode = true
-                onLongItemClickListener.invoke(isSelectedMode, filmesSelecionados)
+                onLongItemClickListener.invoke(isSelectedMode)
 
                 if (filmesSelecionados.contains(filmes.get(adapterPosition))){
                     filmes.get(adapterPosition).selected = false
@@ -46,7 +46,7 @@ class ListaFilmesAdapter(
 
                 if (filmesSelecionados.size == 0){
                     isSelectedMode = false
-                    onLongItemClickListener.invoke(isSelectedMode, filmesSelecionados)
+                    onLongItemClickListener.invoke(isSelectedMode)
                 }
                 notifyDataSetChanged()
                 true
@@ -64,7 +64,7 @@ class ListaFilmesAdapter(
 
                     if (filmesSelecionados.size == 0){
                         isSelectedMode = false
-                        onLongItemClickListener.invoke(isSelectedMode, filmesSelecionados)
+                        onLongItemClickListener.invoke(isSelectedMode)
                     }
                 } else{
                     itemClickListener.invoke(filme)
@@ -98,13 +98,17 @@ class ListaFilmesAdapter(
     }
 
     fun clearSelections(): ArrayList<Filme> {
+        var listaFilmes : ArrayList<Filme> = arrayListOf()
         for(i in 0..filmes.size - 1){
             filmes[i].selected = false
         }
-        filmesSelecionados.clear()
+        for (i in 0..filmesSelecionados.size - 1){
+            listaFilmes.add(filmesSelecionados[i])
+        }
         isSelectedMode = false
+        filmesSelecionados.clear()
         notifyDataSetChanged()
-        return filmesSelecionados
+        return listaFilmes
     }
 
     override fun getItemCount(): Int {

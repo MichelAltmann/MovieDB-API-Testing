@@ -1,5 +1,6 @@
 package com.android.desafiokotlin.ui.activity.ui.Filmes
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -124,7 +125,7 @@ class FilmesFragment : Fragment() {
             startActivity(intent)
         }
 
-        adapter.onLongItemClickListener = { isSelected: Boolean, itemSelected: ArrayList<Filme> ->
+        adapter.onLongItemClickListener = { isSelected: Boolean ->
             val fab : FloatingActionButton = binding.navHostActivityMainFabFavorito
             if (isSelected){
                 fab.isClickable = true
@@ -132,6 +133,7 @@ class FilmesFragment : Fragment() {
                 fab.setOnClickListener {
                     Toast.makeText(context, "Feitoooo", Toast.LENGTH_SHORT).show()
                     filmesFavoritos = adapter.clearSelections()
+                    Log.i(TAG, "configuraRecyclerView: " + filmesFavoritos[1].title)
                     fab.isClickable = false
                     fab.visibility = View.GONE
                 }
