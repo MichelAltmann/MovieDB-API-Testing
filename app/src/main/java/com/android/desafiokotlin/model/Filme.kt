@@ -18,7 +18,7 @@ class Filme(
     val original_title: String?,
     val vote_average: Number?,
     val vote_count: Int?,
-    val selected: Boolean?
+    var selected: Boolean?
 ) : Serializable {
     val filme: Filme
         get() = Filme(

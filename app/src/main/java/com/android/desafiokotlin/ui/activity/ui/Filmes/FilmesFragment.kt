@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -16,6 +17,7 @@ import com.android.desafiokotlin.model.Filme
 import com.android.desafiokotlin.ui.activity.DetalhesFilmeActivity
 import com.android.desafiokotlin.ui.recyclerview.adapter.ListaFilmesAdapter
 import com.android.desafiokotlin.webclient.FilmeWebClient
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.launch
 
 class FilmesFragment : Fragment() {
@@ -26,6 +28,7 @@ class FilmesFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
     private val arrayList: ArrayList<Filme> = arrayListOf()
+    private var filmesFavoritos : ArrayList<Filme> = arrayListOf()
     private val dataSource by lazy {
         FilmeWebClient()
     }
@@ -120,6 +123,24 @@ class FilmesFragment : Fragment() {
             intent.putExtra("filme", it)
             startActivity(intent)
         }
+
+        adapter.onLongItemClickListener = { isSelected: Boolean, itemSelected: ArrayList<Filme> ->
+            val fab : FloatingActionButton = binding.navHostActivityMainFabFavorito
+            if (isSelected){
+                fab.isClickable = true
+                fab.visibility = View.VISIBLE
+                fab.setOnClickListener {
+                    Toast.makeText(context, "Feitoooo", Toast.LENGTH_SHORT).show()
+                    filmesFavoritos = adapter.clearSelections()
+                    fab.isClickable = false
+                    fab.visibility = View.GONE
+                }
+            } else if (!isSelected) {
+                fab.isClickable = false
+                fab.visibility = View.GONE
+            }
+        }
+
     }
 
     override fun onDestroyView() {

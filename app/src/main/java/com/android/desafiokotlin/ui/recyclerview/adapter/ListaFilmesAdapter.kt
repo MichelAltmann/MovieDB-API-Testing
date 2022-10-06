@@ -1,7 +1,6 @@
 package com.android.desafiokotlin.ui.recyclerview.adapter
 
 import android.content.Context
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,59 +21,61 @@ class ListaFilmesAdapter(
 ) : RecyclerView.Adapter<ListaFilmesAdapter.ViewHolder>() {
 
     lateinit var itemClickListener : (filme : Filme) -> Unit
-    lateinit var onLongItemClickListener : (Void) -> Unit
+    lateinit var onLongItemClickListener : (Boolean, filmesSelecionados : ArrayList<Filme>) -> Unit
     private val filmes = filmes.toMutableList()
-    private val filmesSelecionados : ArrayList<Filme> = ArrayList()
     private var isSelectedMode : Boolean = false
+    private val filmesSelecionados : ArrayList<Filme> = ArrayList()
 
     inner class ViewHolder(private val view: View): RecyclerView.ViewHolder(view){
-
 
         fun vincula(filme: Filme) {
             val nome = itemView.findViewById<TextView>(R.id.item_filme_nome)
             val descricao = itemView.findViewById<TextView>(R.id.item_filme_data)
             val imagem = itemView.findViewById<ImageView>(R.id.item_filme_imagem)
-
             itemView.rootView.setOnLongClickListener{
                 isSelectedMode = true
+                onLongItemClickListener.invoke(isSelectedMode, filmesSelecionados)
 
                 if (filmesSelecionados.contains(filmes.get(adapterPosition))){
-                    itemView.setBackgroundColor(Color.TRANSPARENT)
+                    filmes.get(adapterPosition).selected = false
                     filmesSelecionados.remove(filmes.get(adapterPosition))
                 } else {
-                    itemView.setBackgroundResource(R.color.selectedColor)
+                    filmes.get(adapterPosition).selected = true
                     filmesSelecionados.add(filmes.get(adapterPosition))
                 }
 
                 if (filmesSelecionados.size == 0){
                     isSelectedMode = false
+                    onLongItemClickListener.invoke(isSelectedMode, filmesSelecionados)
                 }
+                notifyDataSetChanged()
                 true
             }
 
             itemView.rootView.setOnClickListener{
                 if (isSelectedMode){
                     if (filmesSelecionados.contains(filmes.get(adapterPosition))){
-                        itemView.setBackgroundColor(Color.TRANSPARENT)
+                        filmes.get(adapterPosition).selected = false
                         filmesSelecionados.remove(filmes.get(adapterPosition))
                     } else {
-                        itemView.setBackgroundResource(R.color.selectedColor)
+                        filmes.get(adapterPosition).selected = true
                         filmesSelecionados.add(filmes.get(adapterPosition))
                     }
 
                     if (filmesSelecionados.size == 0){
                         isSelectedMode = false
+                        onLongItemClickListener.invoke(isSelectedMode, filmesSelecionados)
                     }
                 } else{
                     itemClickListener.invoke(filme)
                 }
+                notifyDataSetChanged()
             }
 
            Glide.with(imagem)
                .load("https://image.tmdb.org/t/p/w500${filme.poster_path}")
                .placeholder(loadCircularProgress(imagem.context))
                .into(imagem)
-
             nome.text = filme.title
             descricao.text = filme.release_date
         }
@@ -89,7 +90,21 @@ class ListaFilmesAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val filme = filmes[position]
         holder.vincula(filme)
+        if (filme.selected == true){
+            holder.itemView.isSelected = true
+        } else if (filme.selected == false){
+            holder.itemView.isSelected = false
+        }
+    }
 
+    fun clearSelections(): ArrayList<Filme> {
+        for(i in 0..filmes.size - 1){
+            filmes[i].selected = false
+        }
+        filmesSelecionados.clear()
+        isSelectedMode = false
+        notifyDataSetChanged()
+        return filmesSelecionados
     }
 
     override fun getItemCount(): Int {
@@ -105,7 +120,7 @@ class ListaFilmesAdapter(
     private fun loadCircularProgress(context: Context): CircularProgressDrawable {
         val circularProgressDrawable = CircularProgressDrawable(context)
         val colorFilter = BlendModeColorFilterCompat.createBlendModeColorFilterCompat(
-            ContextCompat.getColor(context, R.color.background),
+            ContextCompat.getColor(context, R.color.nav_bar_background),
             BlendModeCompat.SRC_ATOP
         )
 
