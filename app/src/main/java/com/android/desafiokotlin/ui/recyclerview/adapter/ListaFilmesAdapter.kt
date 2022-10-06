@@ -30,7 +30,7 @@ class ListaFilmesAdapter(
 
         fun vincula(filme: Filme) {
             val nome = itemView.findViewById<TextView>(R.id.item_filme_nome)
-            val descricao = itemView.findViewById<TextView>(R.id.item_filme_data)
+            val dataLancamento = itemView.findViewById<TextView>(R.id.item_filme_data)
             val imagem = itemView.findViewById<ImageView>(R.id.item_filme_imagem)
             itemView.rootView.setOnLongClickListener{
                 isSelectedMode = true
@@ -77,7 +77,7 @@ class ListaFilmesAdapter(
                .placeholder(loadCircularProgress(imagem.context))
                .into(imagem)
             nome.text = filme.title
-            descricao.text = filme.release_date
+            dataLancamento.text = filme.release_date
         }
     }
 

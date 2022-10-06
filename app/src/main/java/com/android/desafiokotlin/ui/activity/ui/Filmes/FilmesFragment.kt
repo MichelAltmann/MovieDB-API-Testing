@@ -1,6 +1,5 @@
 package com.android.desafiokotlin.ui.activity.ui.Filmes
 
-import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -8,7 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -33,8 +34,8 @@ class FilmesFragment : Fragment() {
     private val dataSource by lazy {
         FilmeWebClient()
     }
-    private lateinit var recyclerView: RecyclerView
     private var page = 1
+    private lateinit var recyclerView: RecyclerView
     private lateinit var adapter : ListaFilmesAdapter
     private lateinit var scrollListener: RecyclerView.OnScrollListener
 
@@ -58,8 +59,30 @@ class FilmesFragment : Fragment() {
                 recyclerView = binding.activityTopFilmesRecyclerview
                 buscaFilmesComPaginacao()
                 configuraRecyclerView()
+                configuraSeleçãoDeFavoritos()
         }
     }
+
+    private fun configuraSeleçãoDeFavoritos() {
+        adapter.onLongItemClickListener = { isSelected: Boolean ->
+            val fab: FloatingActionButton = binding.navHostActivityMainFabFavorito
+            if (isSelected) {
+                fab.isClickable = true
+                fab.visibility = View.VISIBLE
+                fab.setOnClickListener {
+                    Toast.makeText(context, "Feitoooo", Toast.LENGTH_SHORT).show()
+                    filmesFavoritos = adapter.clearSelections()
+                    setFragmentResult("Favoritos", bundleOf("filmes" to filmesFavoritos))
+                    fab.isClickable = false
+                    fab.visibility = View.GONE
+                }
+            } else if (!isSelected) {
+                fab.isClickable = false
+                fab.visibility = View.GONE
+            }
+        }
+    }
+
     override fun onResume() {
         super.onResume()
         removeScrollListenerAdapter()
@@ -117,32 +140,12 @@ class FilmesFragment : Fragment() {
 
 
     private fun configuraRecyclerView() {
-        recyclerView
         recyclerView.adapter = adapter
         adapter.itemClickListener = {
             val intent = Intent(context, DetalhesFilmeActivity::class.java)
             intent.putExtra("filme", it)
             startActivity(intent)
         }
-
-        adapter.onLongItemClickListener = { isSelected: Boolean ->
-            val fab : FloatingActionButton = binding.navHostActivityMainFabFavorito
-            if (isSelected){
-                fab.isClickable = true
-                fab.visibility = View.VISIBLE
-                fab.setOnClickListener {
-                    Toast.makeText(context, "Feitoooo", Toast.LENGTH_SHORT).show()
-                    filmesFavoritos = adapter.clearSelections()
-                    Log.i(TAG, "configuraRecyclerView: " + filmesFavoritos[1].title)
-                    fab.isClickable = false
-                    fab.visibility = View.GONE
-                }
-            } else if (!isSelected) {
-                fab.isClickable = false
-                fab.visibility = View.GONE
-            }
-        }
-
     }
 
     override fun onDestroyView() {

@@ -18,8 +18,8 @@
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.android.desafiokotlin.ui.activity.ui.notifications.NotificationsFragment"
+        android:id="@+id/navigation_favoritos"
+        android:name="com.android.desafiokotlin.ui.activity.ui.Favoritos.FavoritosFragment"
         android:label="@string/title_favoritos"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_favoritos" />
 </navigation>
