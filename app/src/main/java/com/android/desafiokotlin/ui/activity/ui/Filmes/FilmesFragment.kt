@@ -14,6 +14,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.android.desafiokotlin.database.FavoritoDatabase
+import com.android.desafiokotlin.database.FilmeDAO
 import com.android.desafiokotlin.databinding.FragmentFilmesBinding
 import com.android.desafiokotlin.model.Filme
 import com.android.desafiokotlin.ui.activity.DetalhesFilmeActivity
@@ -38,6 +40,7 @@ class FilmesFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter : ListaFilmesAdapter
     private lateinit var scrollListener: RecyclerView.OnScrollListener
+    private lateinit var dao : FilmeDAO
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,6 +49,7 @@ class FilmesFragment : Fragment() {
     ): View {
         val homeViewModel =
             ViewModelProvider(this).get(FilmesViewModel::class.java)
+        dao = FavoritoDatabase.getInstance(inflater.context).favoritoDAO()
         adapter = ListaFilmesAdapter(inflater.context, arrayList)
         _binding = FragmentFilmesBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -72,7 +76,8 @@ class FilmesFragment : Fragment() {
                 fab.setOnClickListener {
                     Toast.makeText(context, "Feitoooo", Toast.LENGTH_SHORT).show()
                     filmesFavoritos = adapter.clearSelections()
-                    setFragmentResult("Favoritos", bundleOf("filmes" to filmesFavoritos))
+//                    setFragmentResult("Favoritos", bundleOf("filmes" to filmesFavoritos))
+                    dao.salva(filmesFavoritos)
                     fab.isClickable = false
                     fab.visibility = View.GONE
                 }

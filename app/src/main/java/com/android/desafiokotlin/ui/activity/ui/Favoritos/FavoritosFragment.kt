@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
+import com.android.desafiokotlin.database.FavoritoDatabase
+import com.android.desafiokotlin.database.FilmeDAO
 import com.android.desafiokotlin.databinding.FragmentFavoritosBinding
 import com.android.desafiokotlin.model.Filme
 import com.android.desafiokotlin.ui.activity.DetalhesFilmeActivity
@@ -27,12 +29,14 @@ class FavoritosFragment : Fragment() {
     var filmesFavoritos : ArrayList<Filme> = ArrayList()
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter : ListaFilmesAdapter
+    private lateinit var dao : FilmeDAO
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        dao = FavoritoDatabase.getInstance(inflater.context).favoritoDAO()
         adapter = ListaFilmesAdapter(inflater.context, filmesFavoritos)
         val notificationsViewModel =
             ViewModelProvider(this).get(FavoritosViewModel::class.java)
@@ -44,13 +48,14 @@ class FavoritosFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setFragmentResultListener("Favoritos") {requestKey, bundle ->
-            filmesFavoritos = bundle.getSerializable("filmes") as ArrayList<Filme>
+//        setFragmentResultListener("Favoritos") {requestKey, bundle ->
+//            filmesFavoritos = bundle.getSerializable("filmes") as ArrayList<Filme>
+            filmesFavoritos = dao.buscaTodos() as ArrayList<Filme>
             Log.i(TAG, "onViewCreated: " + filmesFavoritos[1].title)
             recyclerView = binding.activityTopFilmesRecyclerview
             configuraRecyclerView()
             adapter.atualiza(filmesFavoritos)
-        }
+//        }
 
     }
 

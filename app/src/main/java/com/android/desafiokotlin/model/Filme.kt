@@ -14,10 +14,10 @@ class Filme(
     val backdrop_path: String?,
     val poster_path: String?,
     val overview: String?,
-    val popularity: Number?,
+    val popularity: Float?,
     val original_title: String?,
-    val vote_average: Number?,
-    val vote_count: Int?,
+    val vote_average: Float?,
+    val vote_count: Float?,
     var selected: Boolean?
 ) : Serializable {
     val filme: Filme
@@ -29,10 +29,10 @@ class Filme(
             backdrop_path ?: "",
             poster_path ?: "",
             overview ?: "",
-            popularity ?: 0,
+            popularity ?: 0F,
             original_title ?: "",
-            vote_average ?: 0,
-            vote_count ?: 0,
+            vote_average ?: 0F,
+            vote_count ?: 0F,
         selected ?: false
         )
 }

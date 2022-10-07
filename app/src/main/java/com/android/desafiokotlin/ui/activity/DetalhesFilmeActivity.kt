@@ -77,7 +77,7 @@ class DetalhesFilmeActivity : AppCompatActivity() {
         filme: Filme,
         votos: TextView
     ) {
-        if (filme.vote_count != 0) {
+        if (filme.vote_count != 0F) {
             votos.text = filme.vote_count.toString()
         } else {
             votos.visibility = View.GONE
@@ -90,7 +90,7 @@ class DetalhesFilmeActivity : AppCompatActivity() {
         filme: Filme,
         mediaVotos: TextView
     ) {
-        if (filme.vote_average != 0) {
+        if (filme.vote_average != 0F) {
             mediaVotos.text = filme.vote_average.toString()
         } else {
             mediaVotos.visibility = View.GONE
@@ -103,7 +103,7 @@ class DetalhesFilmeActivity : AppCompatActivity() {
         filme: Filme,
         popularidade: TextView
     ) {
-        if (filme.popularity != 0) {
+        if (filme.popularity != 0F) {
             popularidade.text = filme.popularity.toString()
         } else {
             popularidade.visibility = View.GONE
