@@ -16,7 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:spanCount="2"
+        app:spanCount="3"
         tools:listitem="@layout/item_filme"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

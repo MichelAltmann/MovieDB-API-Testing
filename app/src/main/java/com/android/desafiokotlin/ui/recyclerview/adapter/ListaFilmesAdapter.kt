@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide
 
 class ListaFilmesAdapter(
     private val context: Context,
+    private val tela: String,
     filmes: List<Filme> = emptyList()
 ) : RecyclerView.Adapter<ListaFilmesAdapter.ViewHolder>() {
 
@@ -29,9 +30,17 @@ class ListaFilmesAdapter(
     inner class ViewHolder(private val view: View): RecyclerView.ViewHolder(view){
 
         fun vincula(filme: Filme) {
-            val nome = itemView.findViewById<TextView>(R.id.item_filme_nome)
-            val dataLancamento = itemView.findViewById<TextView>(R.id.item_filme_data)
-            val imagem = itemView.findViewById<ImageView>(R.id.item_filme_imagem)
+            var nome : TextView
+            var dataLancamento : TextView
+            var imagem : ImageView
+
+                 nome = itemView.findViewById(R.id.item_filme_nome)
+                 dataLancamento = itemView.findViewById(R.id.item_filme_data)
+                 imagem = itemView.findViewById(R.id.item_filme_imagem)
+            if (tela.equals("favoritos")){
+                nome.visibility = View.GONE
+                dataLancamento.visibility = View.GONE
+            }
             itemView.rootView.setOnLongClickListener{
                 isSelectedMode = true
                 onLongItemClickListener.invoke(isSelectedMode)
@@ -97,7 +106,7 @@ class ListaFilmesAdapter(
         }
     }
 
-    fun clearSelections(): ArrayList<Filme> {
+    fun pegaFavoritos(): ArrayList<Filme> {
         var listaFilmes : ArrayList<Filme> = arrayListOf()
         for(i in 0..filmes.size - 1){
             filmes[i].selected = false

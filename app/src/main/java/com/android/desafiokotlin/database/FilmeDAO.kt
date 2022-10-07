@@ -17,6 +17,6 @@ interface FilmeDAO {
     fun salva(filme : List<Filme>)
 
     @Delete
-    fun remove(filme : Filme)
+    fun remove(filme : List<Filme>)
 
 }

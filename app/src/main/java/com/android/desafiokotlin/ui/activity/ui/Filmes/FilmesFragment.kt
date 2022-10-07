@@ -7,9 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -50,7 +48,7 @@ class FilmesFragment : Fragment() {
         val homeViewModel =
             ViewModelProvider(this).get(FilmesViewModel::class.java)
         dao = FavoritoDatabase.getInstance(inflater.context).favoritoDAO()
-        adapter = ListaFilmesAdapter(inflater.context, arrayList)
+        adapter = ListaFilmesAdapter(inflater.context,"filmes", arrayList)
         _binding = FragmentFilmesBinding.inflate(inflater, container, false)
         val root: View = binding.root
         return root
@@ -75,8 +73,7 @@ class FilmesFragment : Fragment() {
                 fab.visibility = View.VISIBLE
                 fab.setOnClickListener {
                     Toast.makeText(context, "Feitoooo", Toast.LENGTH_SHORT).show()
-                    filmesFavoritos = adapter.clearSelections()
-//                    setFragmentResult("Favoritos", bundleOf("filmes" to filmesFavoritos))
+                    filmesFavoritos = adapter.pegaFavoritos()
                     dao.salva(filmesFavoritos)
                     fab.isClickable = false
                     fab.visibility = View.GONE

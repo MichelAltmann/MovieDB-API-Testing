@@ -1,14 +1,12 @@
 package com.android.desafiokotlin.ui.activity.ui.Favoritos
 
-import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.android.desafiokotlin.database.FavoritoDatabase
@@ -17,6 +15,7 @@ import com.android.desafiokotlin.databinding.FragmentFavoritosBinding
 import com.android.desafiokotlin.model.Filme
 import com.android.desafiokotlin.ui.activity.DetalhesFilmeActivity
 import com.android.desafiokotlin.ui.recyclerview.adapter.ListaFilmesAdapter
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class FavoritosFragment : Fragment() {
 
@@ -37,7 +36,7 @@ class FavoritosFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         dao = FavoritoDatabase.getInstance(inflater.context).favoritoDAO()
-        adapter = ListaFilmesAdapter(inflater.context, filmesFavoritos)
+        adapter = ListaFilmesAdapter(inflater.context, "favoritos" ,filmesFavoritos)
         val notificationsViewModel =
             ViewModelProvider(this).get(FavoritosViewModel::class.java)
         _binding = FragmentFavoritosBinding.inflate(inflater, container, false)
@@ -48,15 +47,11 @@ class FavoritosFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        setFragmentResultListener("Favoritos") {requestKey, bundle ->
-//            filmesFavoritos = bundle.getSerializable("filmes") as ArrayList<Filme>
             filmesFavoritos = dao.buscaTodos() as ArrayList<Filme>
-            Log.i(TAG, "onViewCreated: " + filmesFavoritos[1].title)
             recyclerView = binding.activityTopFilmesRecyclerview
             configuraRecyclerView()
+            configuraSeleçãoDeFavoritos()
             adapter.atualiza(filmesFavoritos)
-//        }
-
     }
 
         private fun configuraRecyclerView() {
@@ -67,6 +62,27 @@ class FavoritosFragment : Fragment() {
                 startActivity(intent)
             }
         }
+
+    private fun configuraSeleçãoDeFavoritos() {
+        adapter.onLongItemClickListener = { isSelected: Boolean ->
+            val fab: FloatingActionButton = binding.navHostActivityMainFabDeletaFavorito
+            if (isSelected) {
+                fab.isClickable = true
+                fab.visibility = View.VISIBLE
+                fab.setOnClickListener {
+                    Toast.makeText(context, "Feitoooo", Toast.LENGTH_SHORT).show()
+                    filmesFavoritos = adapter.pegaFavoritos()
+                    dao.remove(filmesFavoritos)
+                    adapter.atualiza(dao.buscaTodos())
+                    fab.isClickable = false
+                    fab.visibility = View.GONE
+                }
+            } else if (!isSelected) {
+                fab.isClickable = false
+                fab.visibility = View.GONE
+            }
+        }
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

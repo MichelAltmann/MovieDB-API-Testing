@@ -12,12 +12,6 @@
         tools:layout="@layout/fragment_filmes" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.android.desafiokotlin.ui.activity.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
-
-    <fragment
         android:id="@+id/navigation_favoritos"
         android:name="com.android.desafiokotlin.ui.activity.ui.Favoritos.FavoritosFragment"
         android:label="@string/title_favoritos"

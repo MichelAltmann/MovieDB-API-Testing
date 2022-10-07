@@ -28,7 +28,7 @@
             <ImageView
                 android:id="@+id/item_filme_imagem"
                 android:layout_width="0dp"
-                android:layout_height="250dp"
+                android:layout_height="150dp"
                 android:scaleType="centerCrop"
                 tools:srcCompat="@tools:sample/backgrounds/scenic"
                 app:layout_constraintTop_toTopOf="parent"
@@ -40,21 +40,21 @@
             <TextView
                 android:id="@+id/item_filme_nome"
                 android:layout_width="0dp"
-                android:layout_height="42dp"
-                android:layout_margin="8dp"
+                android:layout_height="34dp"
                 android:gravity="center"
-                tools:text="Nome do filme"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="20dp"
                 android:maxLines="2"
-                android:ellipsize="end"
-                android:textSize="16sp"
                 android:textColor="#FFFFFF"
+                android:textSize="12sp"
                 android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@id/item_filme_imagem"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintVertical_bias="0"
-                app:layout_constraintHorizontal_bias="0"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/item_filme_imagem"
+                app:layout_constraintVertical_bias="1"
+                tools:text="Nome do filme" />
 
             <TextView
                 android:id="@+id/item_filme_data"
@@ -62,6 +62,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 tools:text="Data Lançamento"
+                android:textSize="12sp"
                 android:gravity="center"
                 android:textColor="#aaaaaa"
                 app:layout_constraintTop_toBottomOf="@id/item_filme_nome"
