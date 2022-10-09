@@ -1,6 +1,8 @@
 package com.android.desafiokotlin.ui.recyclerview.adapter
 
+import android.content.ContentValues.TAG
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +14,7 @@ import androidx.core.graphics.BlendModeCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.android.desafiokotlin.R
+import com.android.desafiokotlin.database.FavoritoDatabase
 import com.android.desafiokotlin.model.Filme
 import com.bumptech.glide.Glide
 
@@ -24,6 +27,8 @@ class ListaFilmesAdapter(
     lateinit var itemClickListener : (filme : Filme) -> Unit
     lateinit var onLongItemClickListener : (Boolean) -> Unit
     private val filmes = filmes.toMutableList()
+    private val filmesFavoritos = FavoritoDatabase.getInstance(context).favoritoDAO().buscaTodos()
+    private val dao = FavoritoDatabase.getInstance(context).favoritoDAO()
     private var isSelectedMode : Boolean = false
     private val filmesSelecionados : ArrayList<Filme> = ArrayList()
 
@@ -33,10 +38,12 @@ class ListaFilmesAdapter(
             var nome : TextView
             var dataLancamento : TextView
             var imagem : ImageView
+            var imgFav : ImageView
 
                  nome = itemView.findViewById(R.id.item_filme_nome)
                  dataLancamento = itemView.findViewById(R.id.item_filme_data)
                  imagem = itemView.findViewById(R.id.item_filme_imagem)
+                 imgFav = itemView.findViewById(R.id.item_filme_favorito)
             if (tela.equals("favoritos")){
                 nome.visibility = View.GONE
                 dataLancamento.visibility = View.GONE
@@ -87,6 +94,9 @@ class ListaFilmesAdapter(
                .into(imagem)
             nome.text = filme.title
             dataLancamento.text = filme.release_date
+            if (dao.buscaFilme(filmes[adapterPosition].id) != null){
+                imgFav.visibility = View.VISIBLE
+            }
         }
     }
 
@@ -118,6 +128,24 @@ class ListaFilmesAdapter(
         filmesSelecionados.clear()
         notifyDataSetChanged()
         return listaFilmes
+    }
+
+    fun selecionaFavoritos() {
+        filmesSelecionados.clear()
+        for(i in 0..filmes.size - 1){
+            filmes[i].selected = true
+            filmesSelecionados.add(filmes[i])
+        }
+        notifyDataSetChanged()
+    }
+
+    fun cancelaSelecao() {
+        for (i in 0..filmes.size - 1){
+            filmes[i].selected = false
+            filmesSelecionados.clear()
+        }
+        isSelectedMode = false
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int {

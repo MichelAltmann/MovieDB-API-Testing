@@ -26,8 +26,6 @@
         android:layout_margin="16dp"
         android:clickable="false"
         android:visibility="invisible"
-        android:scaleX="0.85"
-        android:scaleY="0.85"
         android:backgroundTint="#e90000"
         app:borderWidth="5dp"
         app:layout_constraintBottom_toBottomOf="parent"

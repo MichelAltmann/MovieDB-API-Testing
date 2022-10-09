@@ -13,6 +13,9 @@ interface FilmeDAO {
     @Query("SELECT * FROM Filme")
     fun buscaTodos() : List<Filme>
 
+    @Query("SELECT * FROM Filme WHERE id = :id")
+    fun buscaFilme(id: Int?) : Filme
+
     @Insert(onConflict = REPLACE)
     fun salva(filme : List<Filme>)
 

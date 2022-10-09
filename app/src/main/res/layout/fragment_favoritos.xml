@@ -19,6 +19,33 @@
         app:spanCount="4"
         tools:listitem="@layout/item_filme"/>
 
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/nav_host_activity_main_fabCancelarSelecao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:clickable="false"
+        android:visibility="invisible"
+        android:backgroundTint="#e90000"
+        app:borderWidth="5dp"
+        app:layout_constraintBottom_toTopOf="@id/nav_host_activity_main_fabSelecionaFavoritos"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_baseline_clear_24" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/nav_host_activity_main_fabSelecionaFavoritos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:clickable="false"
+        android:visibility="invisible"
+        android:backgroundTint="#e90000"
+        app:borderWidth="5dp"
+        app:layout_constraintBottom_toTopOf="@id/nav_host_activity_main_fabDeletaFavorito"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_baseline_select_all_24" />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/nav_host_activity_main_fabDeletaFavorito"
         android:layout_width="wrap_content"
@@ -26,12 +53,12 @@
         android:layout_margin="16dp"
         android:clickable="false"
         android:visibility="invisible"
-        android:scaleX="0.85"
-        android:scaleY="0.85"
         android:backgroundTint="#e90000"
         app:borderWidth="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_baseline_favorite_24" />
+        app:srcCompat="@drawable/ic_baseline_delete_24" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

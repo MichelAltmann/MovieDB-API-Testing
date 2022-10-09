@@ -6,12 +6,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.android.desafiokotlin.R
 import com.android.desafiokotlin.database.FavoritoDatabase
 import com.android.desafiokotlin.database.FilmeDAO
 import com.android.desafiokotlin.databinding.FragmentFilmesBinding
@@ -28,6 +31,12 @@ class FilmesFragment : Fragment() {
 
     // This property is only valid between onCreateView and
     // onDestroyView.
+
+    // Variáveis responsáveis pela animação
+    private val fromBottom: Animation by lazy { AnimationUtils.loadAnimation(context, R.anim.from_bottom_anim) }
+    private val toBottom: Animation by lazy { AnimationUtils.loadAnimation(context, R.anim.to_bottom_anim) }
+    private var clicked = false
+
     private val binding get() = _binding!!
     private val arrayList: ArrayList<Filme> = arrayListOf()
     private var filmesFavoritos : ArrayList<Filme> = arrayListOf()
@@ -66,21 +75,22 @@ class FilmesFragment : Fragment() {
     }
 
     private fun configuraSeleçãoDeFavoritos() {
+        var selecionado = 0
         adapter.onLongItemClickListener = { isSelected: Boolean ->
+            selecionado++
             val fab: FloatingActionButton = binding.navHostActivityMainFabFavorito
             if (isSelected) {
-                fab.isClickable = true
-                fab.visibility = View.VISIBLE
+                if (selecionado == 1) modoSelecao()
                 fab.setOnClickListener {
                     Toast.makeText(context, "Feitoooo", Toast.LENGTH_SHORT).show()
                     filmesFavoritos = adapter.pegaFavoritos()
                     dao.salva(filmesFavoritos)
-                    fab.isClickable = false
-                    fab.visibility = View.GONE
+                    selecionado = 0
+                    modoSelecao()
                 }
             } else if (!isSelected) {
-                fab.isClickable = false
-                fab.visibility = View.GONE
+                selecionado = 0
+                modoSelecao()
             }
         }
     }
@@ -149,6 +159,32 @@ class FilmesFragment : Fragment() {
             startActivity(intent)
         }
     }
+
+    //  Funções para criação da animação
+    private fun modoSelecao() {
+        setVisibility(clicked)
+        setAnimation(clicked)
+        clicked = !clicked
+    }
+
+    private fun setAnimation(clicked : Boolean) {
+        if (!clicked){
+            binding.navHostActivityMainFabFavorito.startAnimation(fromBottom)
+            binding.navHostActivityMainFabFavorito.isClickable = true
+        } else{
+            binding.navHostActivityMainFabFavorito.startAnimation(toBottom)
+            binding.navHostActivityMainFabFavorito.isClickable = false
+        }
+    }
+
+    private fun setVisibility(clicked : Boolean) {
+        if(!clicked){
+            binding.navHostActivityMainFabFavorito.visibility = View.VISIBLE
+        } else {
+            binding.navHostActivityMainFabFavorito.visibility = View.GONE
+        }
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
