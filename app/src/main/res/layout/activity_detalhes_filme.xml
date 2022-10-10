@@ -9,8 +9,9 @@
     android:background="#191919">
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,27 +25,27 @@
                 android:id="@+id/activity_detalhes_imagem_do_filme"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:scaleType="centerCrop"
                 android:layout_margin="8dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/imagem_padrao"
                 app:flow_verticalBias="0.0"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:src="@drawable/imagem_padrao"
-                tools:srcCompat="@tools:sample/backgrounds/scenic"/>
+                tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
             <ImageView
                 android:id="@+id/activity_detalhes_filme_poster"
                 android:layout_width="100dp"
                 android:layout_height="150dp"
-                android:scaleType="centerCrop"
                 android:layout_margin="32dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintVertical_bias="0.15"
+                android:scaleType="centerCrop"
                 android:src="@drawable/imagem_padrao"
-                tools:srcCompat="@tools:sample/avatars"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.15"
+                tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
                 android:id="@+id/activity_detalhes_nome_do_filme"
@@ -53,37 +54,37 @@
                 android:layout_margin="12dp"
                 android:gravity="center"
                 android:textColor="#FFFFFF"
-                android:textStyle="bold"
                 android:textSize="32sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/activity_detalhes_filme_poster"
                 tools:text="Nome do filme" />
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cardview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/cardview"
-                app:layout_constraintTop_toBottomOf="@id/activity_detalhes_nome_do_filme"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 android:layout_margin="16dp"
                 android:background="#292929"
-                app:cardCornerRadius="8dp">
+                app:cardCornerRadius="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/activity_detalhes_nome_do_filme">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="6dp"
-                    android:background="#292929">
+                    android:background="#292929"
+                    android:padding="6dp">
 
                     <TextView
                         android:id="@+id/activity_detalhes_sinopse"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:textColor="#afafaf"
                         android:gravity="fill"
+                        android:textColor="#afafaf"
+                        android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -242,5 +243,13 @@
 
     </ScrollView>
 
+    <include
+        android:id="@+id/toolbar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        layout="@layout/toolbar_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

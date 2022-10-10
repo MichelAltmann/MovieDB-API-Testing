@@ -28,7 +28,6 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_filmes, R.id.navigation_favoritos
             )
         )
-        setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
 }

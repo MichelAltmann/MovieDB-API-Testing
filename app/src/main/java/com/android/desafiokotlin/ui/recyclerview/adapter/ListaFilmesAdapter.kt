@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.BlendModeColorFilterCompat
 import androidx.core.graphics.BlendModeCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.android.desafiokotlin.R
@@ -38,12 +39,10 @@ class ListaFilmesAdapter(
             var nome : TextView
             var dataLancamento : TextView
             var imagem : ImageView
-            var imgFav : ImageView
 
                  nome = itemView.findViewById(R.id.item_filme_nome)
                  dataLancamento = itemView.findViewById(R.id.item_filme_data)
                  imagem = itemView.findViewById(R.id.item_filme_imagem)
-                 imgFav = itemView.findViewById(R.id.item_filme_favorito)
             if (tela.equals("favoritos")){
                 nome.visibility = View.GONE
                 dataLancamento.visibility = View.GONE
@@ -52,29 +51,32 @@ class ListaFilmesAdapter(
                 isSelectedMode = true
                 onLongItemClickListener.invoke(isSelectedMode)
 
+                filmes[adapterPosition].selected = !(filmes[adapterPosition].selected ?: false)
+
                 if (filmesSelecionados.contains(filmes.get(adapterPosition))){
-                    filmes.get(adapterPosition).selected = false
                     filmesSelecionados.remove(filmes.get(adapterPosition))
                 } else {
-                    filmes.get(adapterPosition).selected = true
                     filmesSelecionados.add(filmes.get(adapterPosition))
                 }
+
+
 
                 if (filmesSelecionados.size == 0){
                     isSelectedMode = false
                     onLongItemClickListener.invoke(isSelectedMode)
                 }
-                notifyDataSetChanged()
+                notifyItemChanged(adapterPosition)
                 true
             }
 
             itemView.rootView.setOnClickListener{
                 if (isSelectedMode){
+
+                    filmes[adapterPosition].selected = !(filmes[adapterPosition].selected ?: false)
+
                     if (filmesSelecionados.contains(filmes.get(adapterPosition))){
-                        filmes.get(adapterPosition).selected = false
                         filmesSelecionados.remove(filmes.get(adapterPosition))
                     } else {
-                        filmes.get(adapterPosition).selected = true
                         filmesSelecionados.add(filmes.get(adapterPosition))
                     }
 
@@ -85,7 +87,7 @@ class ListaFilmesAdapter(
                 } else{
                     itemClickListener.invoke(filme)
                 }
-                notifyDataSetChanged()
+                notifyItemChanged(adapterPosition)
             }
 
            Glide.with(imagem)
@@ -94,9 +96,7 @@ class ListaFilmesAdapter(
                .into(imagem)
             nome.text = filme.title
             dataLancamento.text = filme.release_date
-            if (dao.buscaFilme(filmes[adapterPosition].id) != null){
-                imgFav.visibility = View.VISIBLE
-            }
+
         }
     }
 
@@ -109,11 +109,10 @@ class ListaFilmesAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val filme = filmes[position]
         holder.vincula(filme)
-        if (filme.selected == true){
-            holder.itemView.isSelected = true
-        } else if (filme.selected == false){
-            holder.itemView.isSelected = false
-        }
+        holder.itemView.isSelected = filme.selected == true
+
+            var imgFav = holder.itemView.findViewById<ImageView>(R.id.item_filme_favorito)
+            imgFav.isVisible = dao.buscaFilme(filmes[position].id) != null
     }
 
     fun pegaFavoritos(): ArrayList<Filme> {

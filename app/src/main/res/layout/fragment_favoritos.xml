@@ -6,6 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".ui.activity.ui.Favoritos.FavoritosFragment">
 
+    <include
+        layout="@layout/toolbar_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:background="#191919"
         android:id="@+id/activity_top_filmes_recyclerview"

@@ -1,9 +1,12 @@
 package com.android.desafiokotlin.ui.activity
 
 import android.os.Bundle
+import android.view.MenuInflater
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toolbar
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import com.android.desafiokotlin.R
 import com.android.desafiokotlin.model.Filme
@@ -13,6 +16,7 @@ class DetalhesFilmeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detalhes_filme)
+
 
         val imagemBackground = findViewById<ImageView>(R.id.activity_detalhes_imagem_do_filme)
         val imagemPoster = findViewById<ImageView>(R.id.activity_detalhes_filme_poster)
