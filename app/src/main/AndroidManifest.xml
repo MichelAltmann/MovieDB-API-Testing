@@ -27,10 +27,7 @@
         <activity
             android:name=".ui.activity.DetalhesFilmeActivity"
             android:exported="false" />
-        <activity
-            android:name=".ui.activity.TopFilmesActivity"
-            android:exported="true">
-        </activity>
+
     </application>
 
 </manifest>

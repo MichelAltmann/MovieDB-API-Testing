@@ -14,8 +14,8 @@ class DetalhesFilmeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detalhes_filme)
 
-
-        val imagem = findViewById<ImageView>(R.id.activity_detalhes_imagem_do_filme)
+        val imagemBackground = findViewById<ImageView>(R.id.activity_detalhes_imagem_do_filme)
+        val imagemPoster = findViewById<ImageView>(R.id.activity_detalhes_filme_poster)
         val nome = findViewById<TextView>(R.id.activity_detalhes_nome_do_filme)
         val linguaOriginal = findViewById<TextView>(R.id.activity_detalhes_lingua_original)
         val tituloOriginal = findViewById<TextView>(R.id.activity_detalhes_titulo_original)
@@ -31,7 +31,8 @@ class DetalhesFilmeActivity : AppCompatActivity() {
 
         preechendoDadosNaTela(
             filme,
-            imagem,
+            imagemBackground,
+            imagemPoster,
             nome,
             sinopse,
             dataDeLancamento,
@@ -45,7 +46,8 @@ class DetalhesFilmeActivity : AppCompatActivity() {
 
     private fun preechendoDadosNaTela(
         filme: Filme?,
-        imagem: ImageView,
+        imagemBackground: ImageView,
+        imagemPoster: ImageView,
         nome: TextView,
         sinopse: TextView,
         dataDeLancamento: TextView,
@@ -58,15 +60,16 @@ class DetalhesFilmeActivity : AppCompatActivity() {
         if (filme != null) {
             title = "Detalhes " + filme.title
 
-            Glide.with(imagem).load("https://image.tmdb.org/t/p/w500${filme.backdrop_path}")
-                .into(imagem)
+            Glide.with(imagemBackground).load("https://image.tmdb.org/t/p/w500${filme.backdrop_path}")
+                .into(imagemBackground)
+            Glide.with(imagemPoster).load("https://image.tmdb.org/t/p/w500${filme.poster_path}")
+                .into(imagemPoster)
             nome.text = filme.title
 
             overviewCheck(filme, sinopse)
             dataCheck(filme, dataDeLancamento)
             linguaOriginalCheck(filme, linguaOriginal)
             tituloOriginalCheck(filme, tituloOriginal)
-            popularidadeCheck(filme, popularidade)
             mediaVotosCheck(filme, mediaVotos)
             quantidadeDeVotosCheck(filme, votos)
 
@@ -156,8 +159,6 @@ class DetalhesFilmeActivity : AppCompatActivity() {
             dataDeLancamento.text = filme.release_date
         } else {
             dataDeLancamento.visibility = View.GONE
-            findViewById<TextView>(R.id.activity_detalhes_data_lancamento_texto).visibility =
-                View.GONE
         }
     }
 
