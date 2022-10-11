@@ -60,7 +60,6 @@ class ListaFilmesAdapter(
                 }
 
 
-
                 if (filmesSelecionados.size == 0){
                     isSelectedMode = false
                     onLongItemClickListener.invoke(isSelectedMode)

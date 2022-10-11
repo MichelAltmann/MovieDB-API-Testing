@@ -1,7 +1,10 @@
 package com.android.desafiokotlin.ui.activity
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.MenuInflater
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -9,6 +12,7 @@ import android.widget.Toolbar
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import com.android.desafiokotlin.R
+import com.android.desafiokotlin.database.FavoritoDatabase
 import com.android.desafiokotlin.model.Filme
 import com.bumptech.glide.Glide
 
@@ -17,6 +21,8 @@ class DetalhesFilmeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detalhes_filme)
 
+        var bar : ActionBar? = supportActionBar
+        bar?.setBackgroundDrawable(ColorDrawable(Color.parseColor("#232323")))
 
         val imagemBackground = findViewById<ImageView>(R.id.activity_detalhes_imagem_do_filme)
         val imagemPoster = findViewById<ImageView>(R.id.activity_detalhes_filme_poster)
@@ -29,9 +35,16 @@ class DetalhesFilmeActivity : AppCompatActivity() {
         val mediaVotos = findViewById<TextView>(R.id.activity_detalhes_media_de_votos)
         val votos = findViewById<TextView>(R.id.activity_detalhes_quantidade_de_votos)
 
+//        val item : MenuItem = findViewById(R.id.menu_formulario_favorito)
+
 
         val filme = intent.getSerializableExtra("filme") as Filme?
 
+//        if (FavoritoDatabase.getInstance(this).favoritoDAO().buscaFilme(filme!!.id) != null){
+//            item.icon = resources.getDrawable(R.drawable.ic_baseline_favoritered_24)
+//        } else {
+//            item.icon = resources.getDrawable(R.drawable.ic_baseline_favorite_border_24)
+//        }
 
         preechendoDadosNaTela(
             filme,
@@ -47,6 +60,24 @@ class DetalhesFilmeActivity : AppCompatActivity() {
             votos
         )
     }
+
+//    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+//        menuInflater.inflate(R.menu.action_menu, menu)
+////        val item : MenuItem = findViewById(R.id.menu_formulario_favorito)
+////        if (FavoritoDatabase.getInstance(this).favoritoDAO().buscaFilme(filme!!.id) != null){
+////            item.icon = resources.getDrawable(R.drawable.ic_baseline_favoritered_24)
+////        }
+//        return super.onCreateOptionsMenu(menu)
+//    }
+//
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//            if (item.itemId == R.id.menu_formulario_favorito){
+////                if (FavoritoDatabase.getInstance(this).favoritoDAO().buscaFilme(filme!!.id) != null){
+////                    item.icon = resources.getDrawable(R.drawable.ic_baseline_favorite_border_24)
+////                }
+//            }
+//        return super.onOptionsItemSelected(item)
+//    }
 
     private fun preechendoDadosNaTela(
         filme: Filme?,

@@ -5,12 +5,14 @@
     <item
         android:id="@+id/navigation_filmes"
         app:tint="@color/white"
+        app:navigationIconTint="@color/white"
         android:icon="@drawable/ic_baseline_video_library_24"
         android:title="@string/title_filmes" />
 
     <item
         android:id="@+id/navigation_favoritos"
         app:tint="@color/white"
+        android:tint="@color/white"
         android:icon="@drawable/ic_baseline_favorite_24"
         android:title="@string/title_favoritos" />
 

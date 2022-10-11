@@ -7,6 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_filmes"
+        app:navigationIconTint="@color/white"
         android:name="com.android.desafiokotlin.ui.activity.ui.Filmes.FilmesFragment"
         android:label="@string/title_filmes"
         tools:layout="@layout/fragment_filmes" />
