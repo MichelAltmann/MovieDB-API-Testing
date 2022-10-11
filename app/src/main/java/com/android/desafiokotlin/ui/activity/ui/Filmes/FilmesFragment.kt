@@ -82,7 +82,6 @@ class FilmesFragment : Fragment() {
             if (isSelected) {
                 if (selecionado == 1) modoSelecao()
                 fab.setOnClickListener {
-                    Toast.makeText(context, "Feitoooo", Toast.LENGTH_SHORT).show()
                     filmesFavoritos = adapter.pegaFavoritos()
                     dao.salva(filmesFavoritos)
                     selecionado = 0

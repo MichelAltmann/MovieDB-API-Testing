@@ -31,7 +31,7 @@
         app:borderWidth="5dp"
         app:layout_constraintBottom_toTopOf="@id/nav_host_activity_main_fabSelecionaFavoritos"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_baseline_clear_24" />
+        app:srcCompat="@drawable/ic_icons8_uncheck_all" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/nav_host_activity_main_fabSelecionaFavoritos"
@@ -44,7 +44,7 @@
         app:borderWidth="5dp"
         app:layout_constraintBottom_toTopOf="@id/nav_host_activity_main_fabDeletaFavorito"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_baseline_select_all_24" />
+        app:srcCompat="@drawable/ic_icons8_check_all" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/nav_host_activity_main_fabDeletaFavorito"
@@ -57,7 +57,7 @@
         app:borderWidth="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_baseline_delete_24" />
+        app:srcCompat="@drawable/unfavorite" />
 
     <TextView
         android:id="@+id/nav_host_activity_main_nenhumFavorito"

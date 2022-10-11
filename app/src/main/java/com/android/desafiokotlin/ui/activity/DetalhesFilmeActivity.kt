@@ -205,7 +205,7 @@ class DetalhesFilmeActivity : AppCompatActivity() {
             popularidade.text = filme.popularity.toString()
         } else {
             popularidade.visibility = View.GONE
-            findViewById<TextView>(R.id.activity_detalhes_popularidade_texto).visibility =
+//            findViewById<TextView>(R.id.activity_detalhes_popularidade_texto).visibility =
                 View.GONE
         }
     }

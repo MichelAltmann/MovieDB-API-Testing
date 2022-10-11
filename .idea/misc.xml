@@ -7,13 +7,18 @@
         <entry key="..\:/Documentos(D)/Michel/Android Studio/DesafioKotlin/app/src/main/res/drawable/ic_baseline_clear_24.xml" value="0.1935" />
         <entry key="..\:/Documentos(D)/Michel/Android Studio/DesafioKotlin/app/src/main/res/drawable/ic_baseline_delete_24.xml" value="0.1935" />
         <entry key="..\:/Documentos(D)/Michel/Android Studio/DesafioKotlin/app/src/main/res/drawable/ic_baseline_favorite_24.xml" value="0.26" />
+        <entry key="..\:/Documentos(D)/Michel/Android Studio/DesafioKotlin/app/src/main/res/drawable/ic_baseline_favorite_border_24.xml" value="0.1935" />
+        <entry key="..\:/Documentos(D)/Michel/Android Studio/DesafioKotlin/app/src/main/res/drawable/ic_baseline_favoritered_24.xml" value="0.1935" />
+        <entry key="..\:/Documentos(D)/Michel/Android Studio/DesafioKotlin/app/src/main/res/drawable/ic_baseline_library_add_check_24.xml" value="0.1935" />
         <entry key="..\:/Documentos(D)/Michel/Android Studio/DesafioKotlin/app/src/main/res/drawable/ic_baseline_select_all_24.xml" value="0.1935" />
         <entry key="..\:/Documentos(D)/Michel/Android Studio/DesafioKotlin/app/src/main/res/drawable/ic_baseline_video_library_24.xml" value="0.245" />
         <entry key="..\:/Documentos(D)/Michel/Android Studio/DesafioKotlin/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.26" />
         <entry key="..\:/Documentos(D)/Michel/Android Studio/DesafioKotlin/app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.26" />
         <entry key="..\:/Documentos(D)/Michel/Android Studio/DesafioKotlin/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2255" />
         <entry key="..\:/Documentos(D)/Michel/Android Studio/DesafioKotlin/app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.26" />
+        <entry key="..\:/Documentos(D)/Michel/Android Studio/DesafioKotlin/app/src/main/res/drawable/img_border.xml" value="0.1935" />
         <entry key="..\:/Documentos(D)/Michel/Android Studio/DesafioKotlin/app/src/main/res/drawable/selector_backgroud.xml" value="0.26" />
+        <entry key="..\:/Documentos(D)/Michel/Android Studio/DesafioKotlin/app/src/main/res/drawable/unfavorite.xml" value="0.1935" />
         <entry key="..\:/Documentos(D)/Michel/Android Studio/DesafioKotlin/app/src/main/res/layout/activity_detalhes_filme.xml" value="0.3625" />
         <entry key="..\:/Documentos(D)/Michel/Android Studio/DesafioKotlin/app/src/main/res/layout/activity_main.xml" value="0.3625" />
         <entry key="..\:/Documentos(D)/Michel/Android Studio/DesafioKotlin/app/src/main/res/layout/activity_main2.xml" value="0.3625" />
@@ -32,6 +37,7 @@
         <entry key="..\:/Documentos(D)/Michel/Android Studio/DesafioKotlin/app/src/main/res/menu-v26/action_menu.xml" value="0.184375" />
         <entry key="..\:/Documentos(D)/Michel/Android Studio/DesafioKotlin/app/src/main/res/menu-v26/bottom_nav_menu.xml" value="0.284375" />
         <entry key="..\:/Documentos(D)/Michel/Android Studio/DesafioKotlin/app/src/main/res/menu/bottom_nav_menu.xml" value="0.284375" />
+        <entry key="..\:/Documentos(D)/Michel/Android Studio/DesafioKotlin/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1935" />
       </map>
     </option>
   </component>

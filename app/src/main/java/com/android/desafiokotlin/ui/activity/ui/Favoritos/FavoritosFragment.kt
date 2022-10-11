@@ -84,7 +84,6 @@ class FavoritosFragment : Fragment() {
             if (isSelected) {
                 if (selecionado == 1) modoSelecao()
                 binding.navHostActivityMainFabDeletaFavorito.setOnClickListener {
-                    Toast.makeText(context, "Feitoooo", Toast.LENGTH_SHORT).show()
                     filmesFavoritos = adapter.pegaFavoritos()
                     dao.remove(filmesFavoritos)
                     adapter.atualiza(dao.buscaTodos())
