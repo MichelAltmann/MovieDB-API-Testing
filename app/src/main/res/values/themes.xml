@@ -4,14 +4,19 @@
         <!-- Primary brand color. -->
         <item name="colorPrimary">#ffffff</item>
         <item name="colorPrimaryVariant">#232323</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnPrimary">#191919</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/white</item>
-        <item name="colorSecondaryVariant">@color/white</item>
+        <item name="colorSecondary">#191919</item>
+        <item name="colorSecondaryVariant">#191919</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+    </style>
+
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">#ccf5be00</item>
+        <item name="colorControlActivated">#f5be00</item>
     </style>
 
     <style name="Theme.DesafioKotlin.NoActionBar">

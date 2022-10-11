@@ -19,7 +19,13 @@ interface FilmeDAO {
     @Insert(onConflict = REPLACE)
     fun salva(filme : List<Filme>)
 
+    @Insert(onConflict = REPLACE)
+    fun salvaSingular(filme: Filme)
+
     @Delete
     fun remove(filme : List<Filme>)
+
+    @Delete
+    fun removeSingular(filme: Filme)
 
 }

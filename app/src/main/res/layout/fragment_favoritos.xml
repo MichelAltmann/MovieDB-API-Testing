@@ -6,11 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.activity.ui.Favoritos.FavoritosFragment">
 
-    <include
-        layout="@layout/toolbar_main"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
     <androidx.recyclerview.widget.RecyclerView
         android:background="#191919"
         android:id="@+id/activity_top_filmes_recyclerview"
@@ -63,6 +58,19 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_baseline_delete_24" />
+
+    <TextView
+        android:id="@+id/nav_host_activity_main_nenhumFavorito"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="54dp"
+        android:textColor="#aaffffff"
+        android:text="Nenhum filme favoritado."
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 
 

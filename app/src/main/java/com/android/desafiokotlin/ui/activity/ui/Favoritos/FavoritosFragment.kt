@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
@@ -59,6 +60,12 @@ class FavoritosFragment : Fragment() {
             configuraRecyclerView()
             configuraSeleçãoDeFavoritos()
             adapter.atualiza(filmesFavoritos)
+        binding.navHostActivityMainNenhumFavorito.isVisible = filmesFavoritos.isEmpty()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        adapter.atualiza(dao.buscaTodos())
     }
 
         private fun configuraRecyclerView() {

@@ -99,6 +99,7 @@ class FilmesFragment : Fragment() {
         super.onResume()
         removeScrollListenerAdapter()
         addScrollListenerAdapter()
+        adapter.atualiza(arrayList)
     }
 
     override fun onPause() {
