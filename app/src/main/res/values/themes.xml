@@ -14,11 +14,10 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="RatingBar" parent="Theme.AppCompat">
-        <item name="colorControlNormal">#ccf5be00</item>
-        <item name="colorControlActivated">#f5be00</item>
+    <style name="RatingBar" parent="Theme.AppCompat.DayNight">
+        <item name="colorControlNormal">#ffee00</item>
+        <item name="colorControlActivated">#ffee00</item>
     </style>
-
     <style name="Theme.DesafioKotlin.NoActionBar">
         <item name="windowActionBar">true</item>
         <item name="windowNoTitle">true</item>

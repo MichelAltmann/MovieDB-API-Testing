@@ -36,66 +36,88 @@ class ListaFilmesAdapter(
     inner class ViewHolder(private val view: View): RecyclerView.ViewHolder(view){
 
         fun vincula(filme: Filme) {
-            var nome : TextView
-            var dataLancamento : TextView
-            var imagem : ImageView
 
-                 nome = itemView.findViewById(R.id.item_filme_nome)
-                 dataLancamento = itemView.findViewById(R.id.item_filme_data)
-                 imagem = itemView.findViewById(R.id.item_filme_imagem)
+            val (nome, dataLancamento, imagem) = inicializaCampos()
+
             if (tela.equals("favoritos")){
                 nome.visibility = View.GONE
                 dataLancamento.visibility = View.GONE
             }
-            itemView.rootView.setOnLongClickListener{
+            configuraModoSelecao(filme)
+
+            preencheCampos(imagem, filme, nome, dataLancamento)
+
+        }
+
+        fun preencheCampos(
+            imagem: ImageView,
+            filme: Filme,
+            nome: TextView,
+            dataLancamento: TextView
+        ) {
+            Glide.with(imagem)
+                .load("https://image.tmdb.org/t/p/w500${filme.poster_path}")
+                .placeholder(loadCircularProgress(imagem.context))
+                .into(imagem)
+            nome.text = filme.title
+            dataLancamento.text = filme.release_date
+        }
+
+        private fun configuraModoSelecao(filme: Filme) {
+            itemView.rootView.setOnLongClickListener {
                 isSelectedMode = true
                 onLongItemClickListener.invoke(isSelectedMode)
 
-                filmes[adapterPosition].selected = !(filmes[adapterPosition].selected ?: false)
+                selecionaItem()
 
-                if (filmesSelecionados.contains(filmes.get(adapterPosition))){
-                    filmesSelecionados.remove(filmes.get(adapterPosition))
-                } else {
-                    filmesSelecionados.add(filmes.get(adapterPosition))
-                }
+                populaFilmesSelecionados()
 
+                terminaSelecao()
 
-                if (filmesSelecionados.size == 0){
-                    isSelectedMode = false
-                    onLongItemClickListener.invoke(isSelectedMode)
-                }
                 notifyItemChanged(adapterPosition)
                 true
             }
 
-            itemView.rootView.setOnClickListener{
-                if (isSelectedMode){
+            itemView.rootView.setOnClickListener {
+                if (isSelectedMode) {
 
-                    filmes[adapterPosition].selected = !(filmes[adapterPosition].selected ?: false)
+                    selecionaItem()
 
-                    if (filmesSelecionados.contains(filmes.get(adapterPosition))){
-                        filmesSelecionados.remove(filmes.get(adapterPosition))
-                    } else {
-                        filmesSelecionados.add(filmes.get(adapterPosition))
-                    }
+                    populaFilmesSelecionados()
 
-                    if (filmesSelecionados.size == 0){
-                        isSelectedMode = false
-                        onLongItemClickListener.invoke(isSelectedMode)
-                    }
-                } else{
+                    terminaSelecao()
+                } else {
                     itemClickListener.invoke(filme)
                 }
+
                 notifyItemChanged(adapterPosition)
             }
+        }
 
-           Glide.with(imagem)
-               .load("https://image.tmdb.org/t/p/w500${filme.poster_path}")
-               .placeholder(loadCircularProgress(imagem.context))
-               .into(imagem)
-            nome.text = filme.title
-            dataLancamento.text = filme.release_date
+        private fun inicializaCampos(): Triple<TextView, TextView, ImageView> {
+            val nome = itemView.findViewById<TextView>(R.id.item_filme_nome)
+            val dataLancamento = itemView.findViewById<TextView>(R.id.item_filme_data)
+            val imagem = itemView.findViewById<ImageView>(R.id.item_filme_imagem)
+            return Triple(nome, dataLancamento, imagem)
+        }
 
+        private fun selecionaItem() {
+            filmes[adapterPosition].selected = !(filmes[adapterPosition].selected ?: false)
+        }
+
+        private fun terminaSelecao() {
+            if (filmesSelecionados.size == 0) {
+                isSelectedMode = false
+                onLongItemClickListener.invoke(isSelectedMode)
+            }
+        }
+
+        private fun populaFilmesSelecionados() {
+            if (filmesSelecionados.contains(filmes.get(adapterPosition))) {
+                filmesSelecionados.remove(filmes.get(adapterPosition))
+            } else {
+                filmesSelecionados.add(filmes.get(adapterPosition))
+            }
         }
     }
 
@@ -109,16 +131,22 @@ class ListaFilmesAdapter(
         val filme = filmes[position]
         holder.vincula(filme)
         holder.itemView.isSelected = filme.selected == true
+        adicionaCoracaoFavorito(holder, position)
+    }
 
-            var imgFav = holder.itemView.findViewById<ImageView>(R.id.item_filme_favorito)
-            imgFav.isVisible = dao.buscaFilme(filmes[position].id) != null
+    private fun adicionaCoracaoFavorito(
+        holder: ViewHolder,
+        position: Int
+    ) {
+        var imgFav = holder.itemView.findViewById<ImageView>(R.id.item_filme_favorito)
+        imgFav.isVisible = dao.buscaFilme(filmes[position].id) != null
     }
 
     fun pegaFavoritos(): ArrayList<Filme> {
         var listaFilmes : ArrayList<Filme> = arrayListOf()
-        for(i in 0..filmes.size - 1){
-            filmes[i].selected = false
-        }
+
+        limpaSelecao()
+
         for (i in 0..filmesSelecionados.size - 1){
             listaFilmes.add(filmesSelecionados[i])
         }
@@ -128,20 +156,28 @@ class ListaFilmesAdapter(
         return listaFilmes
     }
 
+    private fun limpaSelecao() {
+        for (i in 0..filmes.size - 1) {
+            filmes[i].selected = false
+        }
+    }
+
     fun selecionaFavoritos() {
         filmesSelecionados.clear()
-        for(i in 0..filmes.size - 1){
-            filmes[i].selected = true
-            filmesSelecionados.add(filmes[i])
-        }
+        adicionaSelecao()
         notifyDataSetChanged()
     }
 
-    fun cancelaSelecao() {
-        for (i in 0..filmes.size - 1){
-            filmes[i].selected = false
-            filmesSelecionados.clear()
+    private fun adicionaSelecao() {
+        for (i in 0..filmes.size - 1) {
+            filmes[i].selected = true
+            filmesSelecionados.add(filmes[i])
         }
+    }
+
+    fun cancelaSelecao() {
+        limpaSelecao()
+        filmesSelecionados.clear()
         isSelectedMode = false
         notifyDataSetChanged()
     }

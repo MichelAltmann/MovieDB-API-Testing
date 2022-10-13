@@ -40,22 +40,19 @@ class FilmesFragment : Fragment() {
     private val binding get() = _binding!!
     private val arrayList: ArrayList<Filme> = arrayListOf()
     private var filmesFavoritos : ArrayList<Filme> = arrayListOf()
-    private val dataSource by lazy {
-        FilmeWebClient()
-    }
-    private var page = 1
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter : ListaFilmesAdapter
     private lateinit var scrollListener: RecyclerView.OnScrollListener
     private lateinit var dao : FilmeDAO
+    val FilmesViewModel by lazy {
+        ViewModelProvider(this).get(FilmesViewModel::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this).get(FilmesViewModel::class.java)
         dao = FavoritoDatabase.getInstance(inflater.context).favoritoDAO()
         adapter = ListaFilmesAdapter(inflater.context,"filmes", arrayList)
         _binding = FragmentFilmesBinding.inflate(inflater, container, false)
@@ -68,9 +65,23 @@ class FilmesFragment : Fragment() {
         super.onCreate(savedInstanceState)
         lifecycleScope.launchWhenStarted {
                 recyclerView = binding.activityTopFilmesRecyclerview
-                buscaFilmesComPaginacao()
                 configuraRecyclerView()
                 configuraSeleçãoDeFavoritos()
+        }
+        setObserver()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        FilmesViewModel.getBuscaFilmesApi()
+    }
+
+    private fun setObserver() {
+        FilmesViewModel.filmeResposta.observe(viewLifecycleOwner){
+            arrayList.addAll(it.results!!)
+            adapter.atualiza(arrayList)
+            removeScrollListenerAdapter()
+            addScrollListenerAdapter()
         }
     }
 
@@ -119,7 +130,7 @@ class FilmesFragment : Fragment() {
                     if (totalItemVisible >= totalItemCount) {
                         lifecycleScope.launch {
                             removeScrollListenerAdapter()
-                            buscaFilmesComPaginacao()
+                            FilmesViewModel.getBuscaFilmesApi()
                         }
                     }
                 }
@@ -134,21 +145,21 @@ class FilmesFragment : Fragment() {
         }
     }
 
-    private suspend fun buscaFilmesComPaginacao() {
-        try {
-            val response = dataSource.buscaTodos(page)
-            if (response != null) {
-                arrayList.addAll(response.results!!)
-                adapter.atualiza(arrayList)
-                page++
-                removeScrollListenerAdapter()
-                addScrollListenerAdapter()
-            }
-
-        } catch (e: Exception) {
-            Log.e("onCreate: ", "Api error $e")
-        }
-    }
+//    private suspend fun buscaFilmesComPaginacao() {
+//        try {
+//            val response = dataSource.buscaTodos(page)
+//            if (response != null) {
+//                arrayList.addAll(response.results!!)
+//                adapter.atualiza(arrayList)
+//                page++
+//                removeScrollListenerAdapter()
+//                addScrollListenerAdapter()
+//            }
+//
+//        } catch (e: Exception) {
+//            Log.e("onCreate: ", "Api error $e")
+//        }
+//    }
 
 
     private fun configuraRecyclerView() {

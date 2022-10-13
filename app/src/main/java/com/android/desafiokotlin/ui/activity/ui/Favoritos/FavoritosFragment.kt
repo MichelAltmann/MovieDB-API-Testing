@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -114,21 +113,28 @@ class FavoritosFragment : Fragment() {
 
     private fun setAnimation(clicked : Boolean) {
         if (!clicked){
-
-            binding.navHostActivityMainFabCancelarSelecao.startAnimation(fromBottom)
-            binding.navHostActivityMainFabSelecionaFavoritos.startAnimation(fromBottom)
-            binding.navHostActivityMainFabDeletaFavorito.startAnimation(fromBottom)
-            binding.navHostActivityMainFabCancelarSelecao.isClickable = true
-            binding.navHostActivityMainFabSelecionaFavoritos.isClickable = true
-            binding.navHostActivityMainFabDeletaFavorito.isClickable = true
+            apareceFabs()
         } else{
-            binding.navHostActivityMainFabCancelarSelecao.startAnimation(toBottom)
-            binding.navHostActivityMainFabSelecionaFavoritos.startAnimation(toBottom)
-            binding.navHostActivityMainFabDeletaFavorito.startAnimation(toBottom)
-            binding.navHostActivityMainFabCancelarSelecao.isClickable = false
-            binding.navHostActivityMainFabSelecionaFavoritos.isClickable = false
-            binding.navHostActivityMainFabDeletaFavorito.isClickable = false
+            escondeFabs()
         }
+    }
+
+    private fun escondeFabs() {
+        binding.navHostActivityMainFabCancelarSelecao.startAnimation(toBottom)
+        binding.navHostActivityMainFabSelecionaFavoritos.startAnimation(toBottom)
+        binding.navHostActivityMainFabDeletaFavorito.startAnimation(toBottom)
+        binding.navHostActivityMainFabCancelarSelecao.isClickable = false
+        binding.navHostActivityMainFabSelecionaFavoritos.isClickable = false
+        binding.navHostActivityMainFabDeletaFavorito.isClickable = false
+    }
+
+    private fun apareceFabs() {
+        binding.navHostActivityMainFabCancelarSelecao.startAnimation(fromBottom)
+        binding.navHostActivityMainFabSelecionaFavoritos.startAnimation(fromBottom)
+        binding.navHostActivityMainFabDeletaFavorito.startAnimation(fromBottom)
+        binding.navHostActivityMainFabCancelarSelecao.isClickable = true
+        binding.navHostActivityMainFabSelecionaFavoritos.isClickable = true
+        binding.navHostActivityMainFabDeletaFavorito.isClickable = true
     }
 
     private fun setVisibility(clicked : Boolean) {

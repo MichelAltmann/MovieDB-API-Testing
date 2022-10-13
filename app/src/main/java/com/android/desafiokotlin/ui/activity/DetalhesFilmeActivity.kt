@@ -1,5 +1,6 @@
 package com.android.desafiokotlin.ui.activity
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -7,10 +8,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.ImageView
-import android.widget.RatingBar
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -19,43 +17,46 @@ import androidx.core.graphics.BlendModeCompat
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.android.desafiokotlin.R
 import com.android.desafiokotlin.database.FavoritoDatabase
+import com.android.desafiokotlin.database.FilmeDAO
 import com.android.desafiokotlin.model.Filme
 import com.bumptech.glide.Glide
 import kotlin.math.roundToInt
 
 
 class DetalhesFilmeActivity : AppCompatActivity() {
-
+    // Variáveis responsáveis pela animação
     private val fromFilled : Animation by lazy { AnimationUtils.loadAnimation(this, R.anim.from_filled)}
     private val toFilled : Animation by lazy { AnimationUtils.loadAnimation(this, R.anim.to_filled)}
     private var clicked = false
+    // imagens
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detalhes_filme)
 
-        val btnFavorito = findViewById<ImageView>(R.id.activity_detalhes_btnFavorito)
+        val btnFavorito = findViewById<ImageButton>(R.id.activity_detalhes_btnFavorito)
+        // botão favorito
         val imagemBackground = findViewById<ImageView>(R.id.activity_detalhes_imagem_do_filme)
         val imagemPoster = findViewById<ImageView>(R.id.activity_detalhes_filme_poster)
+        // Variáveis responsáveis pelos campos de texto
         val nome = findViewById<TextView>(R.id.activity_detalhes_nome_do_filme)
         val linguaOriginal = findViewById<TextView>(R.id.activity_detalhes_lingua_original)
         val tituloOriginal = findViewById<TextView>(R.id.activity_detalhes_titulo_original)
         val sinopse = findViewById<TextView>(R.id.activity_detalhes_sinopse)
+//        val popularidade = findViewById<TextView>()
         val dataDeLancamento = findViewById<TextView>(R.id.activity_detalhes_data_lancamento)
-//        val popularidade = findViewById<TextView>(R.id.activity_detalhes_popularidade)
         val votos = findViewById<TextView>(R.id.activity_detalhes_quantidade_de_votos)
+        // Rating bar, barra das estrelinha
         val rating = findViewById<RatingBar>(R.id.activity_detalhes_ratingBar)
-
+        // action bar
         var bar : ActionBar? = supportActionBar
+
+        val filme = intent.getSerializableExtra("filme") as Filme?
+
         bar?.setBackgroundDrawable(ColorDrawable(Color.parseColor("#232323")))
         val dao = FavoritoDatabase.getInstance(this).favoritoDAO()
 
-
-
-//        val item : MenuItem = findViewById(R.id.menu_formulario_favorito)
-
-
-        val filme = intent.getSerializableExtra("filme") as Filme?
 
         if (filme != null) {
             if (dao.buscaFilme(filme.id) != null){
@@ -65,23 +66,9 @@ class DetalhesFilmeActivity : AppCompatActivity() {
 
         btnFavorito.setOnClickListener {
             if (filme != null) {
-                if (dao.buscaFilme(filme.id) != null){
-                    dao.removeSingular(filme)
-                    clique()
-                    Toast.makeText(this, "Filme removido dos favoritos.", Toast.LENGTH_SHORT).show()
-                } else {
-                    dao.salvaSingular(filme)
-                    clique()
-                    Toast.makeText(this, "Filme adicionado aos favoritos.", Toast.LENGTH_SHORT).show()
-                }
+                favoritaItem(dao, filme)
             }
         }
-
-//        if (FavoritoDatabase.getInstance(this).favoritoDAO().buscaFilme(filme!!.id) != null){
-//            item.icon = resources.getDrawable(R.drawable.ic_baseline_favoritered_24)
-//        } else {
-//            item.icon = resources.getDrawable(R.drawable.ic_baseline_favorite_border_24)
-//        }
 
         preechendoDadosNaTela(
             filme,
@@ -99,6 +86,21 @@ class DetalhesFilmeActivity : AppCompatActivity() {
 
 
 
+    }
+
+    private fun favoritaItem(
+        dao: FilmeDAO,
+        filme: Filme
+    ) {
+        if (dao.buscaFilme(filme.id) != null) {
+            dao.removeSingular(filme)
+            clique()
+            Toast.makeText(this, "Filme removido dos favoritos.", Toast.LENGTH_SHORT).show()
+        } else {
+            dao.salvaSingular(filme)
+            clique()
+            Toast.makeText(this, "Filme adicionado aos favoritos.", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun loadCircularProgress(context: Context): CircularProgressDrawable {
@@ -175,6 +177,7 @@ class DetalhesFilmeActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun quantidadeDeVotosCheck(
         filme: Filme,
         votos: TextView
@@ -228,22 +231,29 @@ class DetalhesFilmeActivity : AppCompatActivity() {
         linguaOriginal: TextView
     ) {
         if (filme.original_language != "") {
-            when {
-                filme.original_language.equals("en") -> linguaOriginal.text = "Inglês"
-                filme.original_language.equals("pt") -> linguaOriginal.text = "Português"
-                filme.original_language.equals("es") -> linguaOriginal.text = "Espanhol"
-                filme.original_language.equals("ja") -> linguaOriginal.text = "Japonês"
-                filme.original_language.equals("ko") -> linguaOriginal.text = "Koreano"
-                filme.original_language.equals("fr") -> linguaOriginal.text = "Francês"
-                filme.original_language.equals("ru") -> linguaOriginal.text = "Russo"
-                else -> {
-                    linguaOriginal.text = filme.original_language
-                }
-            }
+            transformaSigla(filme, linguaOriginal)
         } else {
             linguaOriginal.visibility = View.GONE
             findViewById<TextView>(R.id.activity_detalhes_lingua_original_texto).visibility =
                 View.GONE
+        }
+    }
+
+    private fun transformaSigla(
+        filme: Filme,
+        linguaOriginal: TextView
+    ) {
+        when {
+            filme.original_language.equals("en") -> linguaOriginal.text = "Inglês"
+            filme.original_language.equals("pt") -> linguaOriginal.text = "Português"
+            filme.original_language.equals("es") -> linguaOriginal.text = "Espanhol"
+            filme.original_language.equals("ja") -> linguaOriginal.text = "Japonês"
+            filme.original_language.equals("ko") -> linguaOriginal.text = "Koreano"
+            filme.original_language.equals("fr") -> linguaOriginal.text = "Francês"
+            filme.original_language.equals("ru") -> linguaOriginal.text = "Russo"
+            else -> {
+                linguaOriginal.text = filme.original_language
+            }
         }
     }
 
