@@ -14,12 +14,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.BlendModeColorFilterCompat
 import androidx.core.graphics.BlendModeCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.android.desafiokotlin.R
 import com.android.desafiokotlin.database.FavoritoDatabase
 import com.android.desafiokotlin.database.FilmeDAO
 import com.android.desafiokotlin.model.Filme
+import com.android.desafiokotlin.repository.Repository
 import com.bumptech.glide.Glide
+import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
 
@@ -28,15 +31,19 @@ class DetalhesFilmeActivity : AppCompatActivity() {
     private val fromFilled : Animation by lazy { AnimationUtils.loadAnimation(this, R.anim.from_filled)}
     private val toFilled : Animation by lazy { AnimationUtils.loadAnimation(this, R.anim.to_filled)}
     private var clicked = false
-    // imagens
 
+    val dao = FavoritoDatabase.getInstance(this).favoritoDAO()
+
+    private val repository by lazy{
+        Repository(dao)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detalhes_filme)
-
-        val btnFavorito = findViewById<ImageButton>(R.id.activity_detalhes_btnFavorito)
         // botão favorito
+        val btnFavorito = findViewById<ImageButton>(R.id.activity_detalhes_btnFavorito)
+        // imagens
         val imagemBackground = findViewById<ImageView>(R.id.activity_detalhes_imagem_do_filme)
         val imagemPoster = findViewById<ImageView>(R.id.activity_detalhes_filme_poster)
         // Variáveis responsáveis pelos campos de texto
@@ -55,18 +62,19 @@ class DetalhesFilmeActivity : AppCompatActivity() {
         val filme = intent.getSerializableExtra("filme") as Filme?
 
         bar?.setBackgroundDrawable(ColorDrawable(Color.parseColor("#232323")))
-        val dao = FavoritoDatabase.getInstance(this).favoritoDAO()
 
 
         if (filme != null) {
-            if (dao.buscaFilme(filme.id) != null){
-                clique()
+            lifecycleScope.launch {
+                if (repository.buscaFilme(filme.id) != null){
+                    clique()
+                }
             }
         }
 
         btnFavorito.setOnClickListener {
             if (filme != null) {
-                favoritaItem(dao, filme)
+                    favoritaItem(filme)
             }
         }
 
@@ -89,17 +97,24 @@ class DetalhesFilmeActivity : AppCompatActivity() {
     }
 
     private fun favoritaItem(
-        dao: FilmeDAO,
         filme: Filme
     ) {
-        if (dao.buscaFilme(filme.id) != null) {
-            dao.removeSingular(filme)
-            clique()
-            Toast.makeText(this, "Filme removido dos favoritos.", Toast.LENGTH_SHORT).show()
-        } else {
-            dao.salvaSingular(filme)
-            clique()
+        var favorito : Int = 0
+        lifecycleScope.launch {
+            if (repository.buscaFilme(filme.id) != null) {
+                repository.removeSingular(filme)
+                clique()
+                favorito = 1
+            } else {
+                repository.salvaSingular(filme)
+                clique()
+                favorito = 0
+            }
+        }
+        if (favorito == 0){
             Toast.makeText(this, "Filme adicionado aos favoritos.", Toast.LENGTH_SHORT).show()
+        } else{
+            Toast.makeText(this, "Filme removido dos favoritos.", Toast.LENGTH_SHORT).show()
         }
     }
 

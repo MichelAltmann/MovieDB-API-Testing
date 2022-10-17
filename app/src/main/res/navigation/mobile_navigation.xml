@@ -13,6 +13,13 @@
         tools:layout="@layout/fragment_filmes" />
 
     <fragment
+        android:id="@+id/navigation_search"
+        app:navigationIconTint="@color/white"
+        android:name="com.android.desafiokotlin.ui.activity.ui.Search.SearchFragment"
+        android:label="Search"
+        tools:layout="@layout/fragment_search"/>
+
+    <fragment
         android:id="@+id/navigation_favoritos"
         android:name="com.android.desafiokotlin.ui.activity.ui.Favoritos.FavoritosFragment"
         android:label="@string/title_favoritos"

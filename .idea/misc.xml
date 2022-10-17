@@ -17,6 +17,7 @@
         <entry key="..\:/Documentos(D)/Michel/Android Studio/DesafioKotlin/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2255" />
         <entry key="..\:/Documentos(D)/Michel/Android Studio/DesafioKotlin/app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.26" />
         <entry key="..\:/Documentos(D)/Michel/Android Studio/DesafioKotlin/app/src/main/res/drawable/img_border.xml" value="0.1935" />
+        <entry key="..\:/Documentos(D)/Michel/Android Studio/DesafioKotlin/app/src/main/res/drawable/search_border.xml" value="0.1935" />
         <entry key="..\:/Documentos(D)/Michel/Android Studio/DesafioKotlin/app/src/main/res/drawable/selector_backgroud.xml" value="0.26" />
         <entry key="..\:/Documentos(D)/Michel/Android Studio/DesafioKotlin/app/src/main/res/drawable/unfavorite.xml" value="0.1935" />
         <entry key="..\:/Documentos(D)/Michel/Android Studio/DesafioKotlin/app/src/main/res/layout/activity_detalhes_filme.xml" value="0.3625" />
@@ -30,6 +31,7 @@
         <entry key="..\:/Documentos(D)/Michel/Android Studio/DesafioKotlin/app/src/main/res/layout/fragment_first.xml" value="0.3625" />
         <entry key="..\:/Documentos(D)/Michel/Android Studio/DesafioKotlin/app/src/main/res/layout/fragment_home.xml" value="0.284375" />
         <entry key="..\:/Documentos(D)/Michel/Android Studio/DesafioKotlin/app/src/main/res/layout/fragment_notifications.xml" value="0.284375" />
+        <entry key="..\:/Documentos(D)/Michel/Android Studio/DesafioKotlin/app/src/main/res/layout/fragment_search.xml" value="0.3614583333333333" />
         <entry key="..\:/Documentos(D)/Michel/Android Studio/DesafioKotlin/app/src/main/res/layout/fragment_second.xml" value="0.3625" />
         <entry key="..\:/Documentos(D)/Michel/Android Studio/DesafioKotlin/app/src/main/res/layout/item_filme.xml" value="0.3625" />
         <entry key="..\:/Documentos(D)/Michel/Android Studio/DesafioKotlin/app/src/main/res/layout/item_filme_favorito.xml" value="0.3625" />

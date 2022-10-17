@@ -10,6 +10,13 @@
         android:title="@string/title_filmes" />
 
     <item
+        android:id="@+id/navigation_search"
+        app:tint="@color/white"
+        android:tint="@color/white"
+        android:icon="@drawable/ic_baseline_search_24"
+        android:title="@string/title_search" />
+
+    <item
         android:id="@+id/navigation_favoritos"
         app:tint="@color/white"
         android:tint="@color/white"

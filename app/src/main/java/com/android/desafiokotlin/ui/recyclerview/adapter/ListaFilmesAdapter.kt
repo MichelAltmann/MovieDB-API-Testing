@@ -17,19 +17,22 @@ import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.android.desafiokotlin.R
 import com.android.desafiokotlin.database.FavoritoDatabase
 import com.android.desafiokotlin.model.Filme
+import com.android.desafiokotlin.repository.Repository
+import com.android.desafiokotlin.ui.activity.ui.Filmes.FilmesFragment
 import com.bumptech.glide.Glide
 
 class ListaFilmesAdapter(
     private val context: Context,
     private val tela: String,
+    private var favoritos: ArrayList<Filme> = ArrayList(),
     filmes: List<Filme> = emptyList()
 ) : RecyclerView.Adapter<ListaFilmesAdapter.ViewHolder>() {
 
     lateinit var itemClickListener : (filme : Filme) -> Unit
     lateinit var onLongItemClickListener : (Boolean) -> Unit
     private val filmes = filmes.toMutableList()
-    private val filmesFavoritos = FavoritoDatabase.getInstance(context).favoritoDAO().buscaTodos()
     private val dao = FavoritoDatabase.getInstance(context).favoritoDAO()
+    lateinit var favoritoListener : (filme : Filme) -> Boolean
     private var isSelectedMode : Boolean = false
     private val filmesSelecionados : ArrayList<Filme> = ArrayList()
 
@@ -131,22 +134,18 @@ class ListaFilmesAdapter(
         val filme = filmes[position]
         holder.vincula(filme)
         holder.itemView.isSelected = filme.selected == true
-        adicionaCoracaoFavorito(holder, position)
-    }
-
-    private fun adicionaCoracaoFavorito(
-        holder: ViewHolder,
-        position: Int
-    ) {
         var imgFav = holder.itemView.findViewById<ImageView>(R.id.item_filme_favorito)
-        imgFav.isVisible = dao.buscaFilme(filmes[position].id) != null
+        if (favoritos.contains(filmes[position])){
+            imgFav.isVisible = favoritos[position].id != null
+        } else {
+            imgFav.isVisible = false
+        }
     }
 
     fun pegaFavoritos(): ArrayList<Filme> {
         var listaFilmes : ArrayList<Filme> = arrayListOf()
 
         limpaSelecao()
-
         for (i in 0..filmesSelecionados.size - 1){
             listaFilmes.add(filmesSelecionados[i])
         }
@@ -186,8 +185,14 @@ class ListaFilmesAdapter(
         return filmes.size
     }
 
-    fun atualiza(filmes: List<Filme>){
+    fun clear(){
         this.filmes.clear()
+        notifyDataSetChanged()
+    }
+
+    fun atualiza(filmes: List<Filme>){
+        this.filmes.removeAll(filmes)
+//        this.filmes.clear()
         this.filmes.addAll(filmes)
         notifyDataSetChanged()
     }
@@ -205,6 +210,13 @@ class ListaFilmesAdapter(
         circularProgressDrawable.start()
 
         return circularProgressDrawable
+    }
+
+    fun colocaCoracao(filmesFavoritos : ArrayList<Filme>) {
+        favoritos.clear()
+        favoritos.addAll(filmesFavoritos)
+        Log.i(TAG, "colocaCoracao: asfasfasfga")
+        notifyDataSetChanged()
     }
 
 }

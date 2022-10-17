@@ -11,21 +11,21 @@ import com.android.desafiokotlin.model.Filme
 interface FilmeDAO {
 
     @Query("SELECT * FROM Filme")
-    fun buscaTodos() : List<Filme>
+    suspend fun buscaTodos() : List<Filme>
 
     @Query("SELECT * FROM Filme WHERE id = :id")
-    fun buscaFilme(id: Int?) : Filme?
+    suspend fun buscaFilme(id: Int?) : Filme?
 
     @Insert(onConflict = REPLACE)
-    fun salva(filme : List<Filme>)
+    suspend fun salva(filme : List<Filme>)
 
     @Insert(onConflict = REPLACE)
-    fun salvaSingular(filme: Filme)
+    suspend fun salvaSingular(filme: Filme)
 
     @Delete
-    fun remove(filme : List<Filme>)
+    suspend fun remove(filme : List<Filme>)
 
     @Delete
-    fun removeSingular(filme: Filme)
+    suspend fun removeSingular(filme: Filme)
 
 }

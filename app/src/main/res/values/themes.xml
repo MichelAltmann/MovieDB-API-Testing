@@ -6,12 +6,23 @@
         <item name="colorPrimaryVariant">#232323</item>
         <item name="colorOnPrimary">#191919</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">#191919</item>
+        <item name="colorSecondary">#ffffff</item>
         <item name="colorSecondaryVariant">#191919</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorOnSecondary">#191919</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+    </style>
+
+    <style name="AppSearchView" parent="Widget.AppCompat.SearchView" >
+        <!-- Text Size -->
+        <item name="android:textSize">16sp</item>
+        <!-- Query Text Color -->
+        <item name="android:textColorPrimary">@color/white</item>
+        <!-- Hint Color -->
+        <item name="android:textColorHint">#99ffffff</item>
+        <!-- Icon Color -->
+        <item name="android:tint">#99ffffff</item>
     </style>
 
     <style name="RatingBar" parent="Theme.AppCompat.DayNight">
