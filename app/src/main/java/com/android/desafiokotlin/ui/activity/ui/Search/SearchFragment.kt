@@ -13,12 +13,10 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.SearchView
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.desafiokotlin.R
 import com.android.desafiokotlin.database.FavoritoDatabase
-import com.android.desafiokotlin.databinding.FragmentFilmesBinding
 import com.android.desafiokotlin.databinding.FragmentSearchBinding
 import com.android.desafiokotlin.model.Filme
 import com.android.desafiokotlin.repository.Repository
@@ -36,11 +34,10 @@ class SearchFragment : Fragment() {
 
     private var _binding: FragmentSearchBinding ?= null
 
-    private val arrayList: ArrayList<Filme> = arrayListOf()
     private var filmesFavoritos : ArrayList<Filme> = arrayListOf()
     private lateinit var recyclerView: RecyclerView
     private lateinit var scrollListener: RecyclerView.OnScrollListener
-    val SearchViewModel by lazy {
+    val searchViewModel by lazy {
         ViewModelProvider(this).get(SearchViewModel::class.java)
     }
 
@@ -51,7 +48,7 @@ class SearchFragment : Fragment() {
     }
 
     private val adapter by lazy{
-        ListaFilmesAdapter(requireContext(),"filmes",filmesFavoritos, arrayList)
+        ListaFilmesAdapter(requireContext(),"filmes",filmesFavoritos, emptyList())
     }
 
     private val binding get() = _binding!!
@@ -69,7 +66,7 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(searchViewModel::class.java)
         recyclerView = binding.activityTopSearchRecyclerview
         lifecycleScope.launchWhenStarted {
             configuraRecyclerView()
@@ -79,24 +76,19 @@ class SearchFragment : Fragment() {
 //        lifecycleScope.launch {
 //            adapter.colocaCoracao(repository.buscaTodos() as ArrayList<Filme>)
 //        }
+        setObserver()
     }
 
     private fun configuraSearchBar() {
-        var searchBar : SearchView = binding.searchBar
-        searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
-            override fun onQueryTextSubmit(filtro: String?): Boolean {
-                SearchViewModel.filtro = if (filtro != null) filtro else throw NullPointerException("Expression 'filtro' must not be null")
-                searchBar.clearFocus()
-                adapter.clear()
-                setObserver()
+        binding.searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                binding.searchBar.clearFocus()
                 return false
             }
 
             override fun onQueryTextChange(filtro: String?): Boolean {
-                SearchViewModel.filtro = if (filtro != null) filtro else throw NullPointerException("Expression 'filtro' must not be null")
-                adapter.clear()
-                setObserver()
-                Log.i(TAG, "onQueryTextSubmit: " + SearchViewModel.filtro)
+                searchViewModel.filtro = filtro.orEmpty()
+                Log.i(TAG, "onQueryTextSubmit: " + searchViewModel.filtro)
                 return false
             }
         })
@@ -104,14 +96,13 @@ class SearchFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        SearchViewModel.getBuscaFilmesApi()
+        searchViewModel.getBuscaFilmesApi()
     }
 
     private fun setObserver() {
-        SearchViewModel.filmeResposta.observe(viewLifecycleOwner){
-            arrayList.addAll(it.results!!)
-            Log.i(TAG, "setObserver: " + SearchViewModel.filtro)
-            adapter.atualiza(arrayList)
+        searchViewModel.filmeResposta.observe(viewLifecycleOwner){
+            Log.i(TAG, "setObserver: " + searchViewModel.filtro)
+            adapter.atualiza(it)
             removeScrollListenerAdapter()
             addScrollListenerAdapter()
         }
@@ -143,7 +134,6 @@ class SearchFragment : Fragment() {
         super.onResume()
         removeScrollListenerAdapter()
         addScrollListenerAdapter()
-        adapter.atualiza(arrayList)
     }
 
     override fun onPause() {
@@ -164,7 +154,7 @@ class SearchFragment : Fragment() {
                     if (totalItemVisible >= totalItemCount) {
                         lifecycleScope.launch {
                             removeScrollListenerAdapter()
-                            SearchViewModel.getBuscaFilmesApi()
+                            searchViewModel.getBuscaFilmesApi()
                         }
                     }
                 }

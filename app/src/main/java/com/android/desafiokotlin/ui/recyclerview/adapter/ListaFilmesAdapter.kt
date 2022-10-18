@@ -185,14 +185,8 @@ class ListaFilmesAdapter(
         return filmes.size
     }
 
-    fun clear(){
-        this.filmes.clear()
-        notifyDataSetChanged()
-    }
-
     fun atualiza(filmes: List<Filme>){
-        this.filmes.removeAll(filmes)
-//        this.filmes.clear()
+        this.filmes.clear()
         this.filmes.addAll(filmes)
         notifyDataSetChanged()
     }
